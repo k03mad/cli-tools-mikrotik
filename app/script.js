@@ -27,11 +27,13 @@ const {request, array, mikrotik, promise} = require('utils-mad');
     const parsedList = body
         .split(/\r\n/)
         .filter(Boolean)
-        .map(entry => entry
-            .split(/ - |, /g)
-            .map(elem => elem.replace(/ [A-Z]\d+$/, '')),
-        )
-        .map(([ip, country, city]) => ({ip, country, city}))
+        .map(entry => {
+            const [ip, country, city] = entry
+                .split(/ - |, /g)
+                .map(elem => elem.replace(/ [A-Z]\d+$/, ''));
+
+            return {ip, country, city};
+        })
         .sort((a, b) => {
             if (a.country < b.country) {
                 return -1;
