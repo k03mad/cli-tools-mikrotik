@@ -28,7 +28,7 @@ const chooseFromCountries = [
 (async () => {
     try {
 
-        const {body} = await request.got(API_URL, {searchParams: {serverlist: '', code}});
+        const {body} = await request.cache(API_URL, {searchParams: {serverlist: '', code}});
 
         const parsedList = body
             .split(VPN_LIST_NEWLINE)
