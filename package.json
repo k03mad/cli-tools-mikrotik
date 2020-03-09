@@ -27,7 +27,7 @@
 	},
 	"scripts": {
 		"lint": "eslint --report-unused-disable-directives ./ --format codeframe",
-		"setup": "pnpm i",
+		"setup": "pnpm i && pnpm prune",
 		"script": "node app/script.js"
 	},
 	"pre-commit": [
