@@ -1,28 +1,25 @@
 'use strict';
 
-const {green, blue, yellow, magenta, cyan} = require('colorette');
+const log = require('./utils/log');
+const pMap = require('p-map');
+const sort = require('./utils/sort');
 const {hidemy: {code}} = require('../env');
-const {request, array, mikrotik, promise, print} = require('utils-mad');
+const {promise: ping} = require('ping');
+const {request, mikrotik, promise, print} = require('utils-mad');
 
 const API_URL = 'https://hidemy.name/api/pptp.php';
-
-const VPN_CONNECT_RETRIES = 5;
 
 const VPN_LIST_NEWLINE = /\r\n/;
 const VPN_LIST_SEPARATOR = / - |, /g;
 
-const chooseFromCountries = [
-    'Czech Republic',
-    'Estonia',
-    'Finland',
-    'Germany',
-    'Hungary',
-    'Latvia',
-    'Lithuania',
-    'Poland',
-    'Romania',
-    'Serbia',
-    'Slovenia',
+const VPN_CONNECTION_RETRIES = 3;
+const PING_CONCURRENCY = 5;
+
+const MIKROTIK_INTERFACE = '/interface/pptp-client';
+
+const countriesBlacklist = [
+    'Russia',
+    'Ukraine',
 ];
 
 (async () => {
@@ -37,65 +34,52 @@ const chooseFromCountries = [
                 const [ip, country, city] = entry.split(VPN_LIST_SEPARATOR);
                 return {ip, country, city};
             })
-            .sort((a, b) => {
-                if (a.country < b.country) {
-                    return -1;
+            .sort(sort.country);
+
+        log.countries(parsedList);
+
+        const filteredCountries = parsedList.filter(elem => !countriesBlacklist.includes(elem.country));
+        log.ip(parsedList, countriesBlacklist, filteredCountries);
+
+        const servers = await pMap(filteredCountries, async server => {
+            const {time} = await ping.probe(server.ip);
+            return {...server, ping: time};
+        }, {concurrency: PING_CONCURRENCY});
+
+        for (const choosenServer of servers.sort(sort.ping)) {
+            const comment = `${choosenServer.country}/${choosenServer.city}/${choosenServer.ping}ms`;
+
+            const [before] = await mikrotik.write(`${MIKROTIK_INTERFACE}/print`);
+
+            if (before['connect-to'] !== choosenServer.ip) {
+                log.server(before, comment);
+
+                await mikrotik.write([
+                    [`${MIKROTIK_INTERFACE}/set`, `=.id=${before['.id']}`, `=connect-to=${choosenServer.ip}`],
+                    [`${MIKROTIK_INTERFACE}/set`, `=.id=${before['.id']}`, `=comment=${comment}`],
+                ]);
+
+                let found;
+
+                for (let i = 0; i < VPN_CONNECTION_RETRIES; i++) {
+                    await promise.delay();
+
+                    const [after] = await mikrotik.write(`${MIKROTIK_INTERFACE}/print`);
+                    log.connect(after);
+
+                    if (after.running === 'true') {
+                        found = true;
+                        break;
+                    }
                 }
 
-                if (a.country > b.country) {
-                    return 1;
-                }
-
-                return 0;
-            });
-
-        let country;
-        parsedList.forEach(elem => {
-            if (country !== elem.country) {
-                console.log(`\n${yellow(elem.country)}`);
-            }
-
-            console.log(`${green(elem.city)}: ${blue(elem.ip)}`);
-            ({country} = elem);
-        });
-
-        const filteredCountries = parsedList.filter(elem => chooseFromCountries.includes(elem.country));
-        console.log(`\nParsed IPs: ${parsedList.length}`);
-        console.log(`Filtered by countries: ${filteredCountries.length}`);
-
-        for (const choosenServer of array.shuffle(filteredCountries)) {
-            const comment = `${choosenServer.country}/${choosenServer.city}`;
-
-            const [before] = await mikrotik.write('/interface/pptp-client/print');
-            console.log(cyan(`\nCurrent PPTP Server: ${before.comment}`));
-            console.log(`${blue(before['connect-to'])}: running ${before.running}`);
-
-            await mikrotik.write([
-                ['/interface/pptp-client/set', `=.id=${before['.id']}`, `=connect-to=${choosenServer.ip}`],
-                ['/interface/pptp-client/set', `=.id=${before['.id']}`, `=comment=${comment}`],
-            ]);
-            console.log(magenta(`\nNew PPTP Server: ${comment}`));
-
-            let found;
-
-            for (let i = 0; i < VPN_CONNECT_RETRIES; i++) {
-                await promise.delay();
-
-                const [after] = await mikrotik.write('/interface/pptp-client/print');
-                console.log(`${blue(after['connect-to'])}: running ${after.running}`);
-
-                if (after.running === 'true') {
-                    found = true;
+                if (found) {
                     break;
                 }
-            }
-
-            if (found) {
-                break;
             }
         }
 
     } catch (err) {
-        print(err, {full: true, exit: true});
+        print.ex(err, {full: true, exit: true});
     }
 })();
