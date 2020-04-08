@@ -3,9 +3,9 @@
 const log = require('./utils/log');
 const pMap = require('p-map');
 const sort = require('./utils/sort');
+const {array, request, mikrotik, promise, print} = require('utils-mad');
 const {hidemy: {code}} = require('../env');
 const {promise: ping} = require('ping');
-const {request, mikrotik, promise, print} = require('utils-mad');
 
 const API_URL = 'https://hidemy.name/api/pptp.php';
 
@@ -46,7 +46,7 @@ const countriesBlacklist = [
             return {...server, ping: time};
         }, {concurrency: PING_CONCURRENCY});
 
-        for (const choosenServer of servers.sort(sort.ping)) {
+        for (const choosenServer of array.shuffle(servers.sort(sort.ping).slice(0, 5))) {
             const comment = `${choosenServer.country}/${choosenServer.city}/${choosenServer.ping}ms`;
 
             const [before] = await mikrotik.write(`${MIKROTIK_INTERFACE}/print`);
