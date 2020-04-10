@@ -1,5 +1,6 @@
 'use strict';
 
+const asTable = require('as-table');
 const {green, blue, yellow, cyan, magenta} = require('colorette');
 
 module.exports = {
@@ -30,5 +31,10 @@ module.exports = {
 
     connect: after => {
         console.log(`${blue(after['connect-to'])}: running ${after.running}`);
+    },
+
+    pings: list => {
+        console.log('Choosing from fastest servers:\n');
+        console.log(asTable(list));
     },
 };

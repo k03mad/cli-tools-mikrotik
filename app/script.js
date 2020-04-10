@@ -46,7 +46,10 @@ const countriesBlacklist = [
             return {...server, ping: time};
         }, {concurrency: PING_CONCURRENCY});
 
-        for (const choosenServer of array.shuffle(servers.sort(sort.ping).slice(0, 10))) {
+        const fastest = servers.sort(sort.ping).slice(0, 10);
+        log.pings(fastest);
+
+        for (const choosenServer of array.shuffle(fastest)) {
             const comment = `${choosenServer.country}/${choosenServer.city}/${choosenServer.ping}ms`;
 
             const [before] = await mikrotik.write(`${MIKROTIK_INTERFACE}/print`);

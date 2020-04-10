@@ -9,6 +9,7 @@
     "node": ">=13"
   },
   "dependencies": {
+    "as-table": "1.0.55",
     "colorette": "1.1.0",
     "p-map": "4.0.0",
     "ping": "0.2.3",
