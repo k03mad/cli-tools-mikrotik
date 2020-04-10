@@ -1,8 +1,8 @@
 dependencies:
   colorette: 1.1.0
   p-map: 4.0.0
-  ping: 0.2.2
-  utils-mad: 7.4.2
+  ping: 0.2.3
+  utils-mad: 7.4.3
 devDependencies:
   eslint: 6.8.0
   eslint-config-k03mad: 4.2.0_e6239fa9b0f9e30719347ab9f9f7a003
@@ -1523,7 +1523,7 @@ packages:
       node: '>=8.6'
     resolution:
       integrity: sha512-ISBaA8xQNmwELC7eOjqFKMESB2VIqt4PPDD0nsS95b/9dZXvVKOlz9keMSnoGGKcOHXfTvDD6WMaRoSc9UuhRA==
-  /ping/0.2.2:
+  /ping/0.2.3:
     dependencies:
       q: 1.5.1
       underscore: 1.10.1
@@ -1531,7 +1531,7 @@ packages:
     engines:
       node: '>=0.8'
     resolution:
-      integrity: sha1-GA+3UIwdx0eThJvONcgHP5llvOI=
+      integrity: sha512-UiwPl9kpzYIE0iz+EUSjISoVCyg44YckaT3BQ60j4xYuRrxGKH4w3ICSyw6xe3va2zgzD9T0yB8h220PM0Elhg==
   /pre-commit/1.2.2:
     dependencies:
       cross-spawn: 5.1.0
@@ -2020,7 +2020,7 @@ packages:
   /util-deprecate/1.0.2:
     resolution:
       integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
-  /utils-mad/7.4.2:
+  /utils-mad/7.4.3:
     dependencies:
       cheerio: 1.0.0-rc.3
       colorette: 1.1.0
@@ -2040,7 +2040,7 @@ packages:
     engines:
       node: '>=13'
     resolution:
-      integrity: sha512-vrZKails9yqA6quA61M3ovpr8dkD3DNVtbE2By0J1tR5hVybH0g7r6+xafxsJSxqkrTGrAXnvK/5o86E4Oqb4A==
+      integrity: sha512-d/JO/MLsZtKJx2nfmCtGnhbIJKQE8kO7iymez+L5ILCSPdZWa13lhjxVfDDIWsPijPX0lnoK3G4HOTNcJd9Ifg==
   /v8-compile-cache/2.1.0:
     dev: true
     resolution:
@@ -2106,6 +2106,6 @@ specifiers:
   eslint-plugin-sort-requires: 2.1.0
   eslint-plugin-unicorn: 18.0.1
   p-map: 4.0.0
-  ping: 0.2.2
+  ping: 0.2.3
   pre-commit: 1.2.2
-  utils-mad: 7.4.2
+  utils-mad: 7.4.3
