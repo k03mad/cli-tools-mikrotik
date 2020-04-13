@@ -1,13 +1,14 @@
 dependencies:
+  as-table: 1.0.55
   colorette: 1.1.0
   p-map: 4.0.0
   ping: 0.2.3
   utils-mad: 7.4.3
 devDependencies:
   eslint: 6.8.0
-  eslint-config-k03mad: 4.2.0_e6239fa9b0f9e30719347ab9f9f7a003
+  eslint-config-k03mad: 4.2.0_402ed366e50df32fb435cfd4466f6aa3
   eslint-plugin-const-case: 1.2.2
-  eslint-plugin-jsdoc: 22.1.0_eslint@6.8.0
+  eslint-plugin-jsdoc: 23.0.0_eslint@6.8.0
   eslint-plugin-node: 11.1.0_eslint@6.8.0
   eslint-plugin-promise: 4.2.1
   eslint-plugin-sonarjs: 0.5.0_eslint@6.8.0
@@ -203,6 +204,12 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==
+  /as-table/1.0.55:
+    dependencies:
+      printable-characters: 1.0.42
+    dev: false
+    resolution:
+      integrity: sha512-xvsWESUJn0JN421Xb9MQw6AsMHRCUknCe0Wjlxvjud80mU4E6hQf1A6NzQKcYNmYw62MfzEtXc+badstZP3JpQ==
   /astral-regex/1.0.0:
     dev: true
     engines:
@@ -566,11 +573,11 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-otzzTim2/1+lVrlH19EfQQJEhVJSu0zOb9ygb3iapN6UlyaDtyRq4b5U1FuW0v1lRa9Fp/GJyHkSwm6NqABgCA==
-  /eslint-config-k03mad/4.2.0_e6239fa9b0f9e30719347ab9f9f7a003:
+  /eslint-config-k03mad/4.2.0_402ed366e50df32fb435cfd4466f6aa3:
     dependencies:
       eslint: 6.8.0
       eslint-plugin-const-case: 1.2.2
-      eslint-plugin-jsdoc: 22.1.0_eslint@6.8.0
+      eslint-plugin-jsdoc: 23.0.0_eslint@6.8.0
       eslint-plugin-node: 11.1.0_eslint@6.8.0
       eslint-plugin-promise: 4.2.1
       eslint-plugin-sonarjs: 0.5.0_eslint@6.8.0
@@ -608,7 +615,7 @@ packages:
       eslint: '>=4.19.1'
     resolution:
       integrity: sha512-6/Jb/J/ZvSebydwbBJO1R9E5ky7YeElfK56Veh7e4QGFHCXoIXGH9HhVz+ibJLM3XJ1XjP+T7rKBLUa/Y7eIng==
-  /eslint-plugin-jsdoc/22.1.0_eslint@6.8.0:
+  /eslint-plugin-jsdoc/23.0.0_eslint@6.8.0:
     dependencies:
       comment-parser: 0.7.2
       debug: 4.1.1
@@ -624,7 +631,7 @@ packages:
     peerDependencies:
       eslint: ^6.0.0
     resolution:
-      integrity: sha512-54NdbICM7KrxsGUqQsev9aIMqPXyvyBx2218Qcm0TQ16P9CtBI+YY4hayJR6adrxlq4Ej0JLpgfUXWaQVFqmQg==
+      integrity: sha512-zj5ZephjKkFU/J9hEw3RcjwpuywChvwNMgHs2DTgOuKarpJ65SJU3JGgx/K4y9l8iFw0ysrk6NlAKDX88ZwZdw==
   /eslint-plugin-node/11.1.0_eslint@6.8.0:
     dependencies:
       eslint: 6.8.0
@@ -1553,6 +1560,10 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-hjGrh+P926p4R4WbaB6OckyRtO0F0/lQBiT+0gnxjV+5kjPBrfVBFCsCLbMqVQeydvIoouYTCmmEURiH3R1Bdg==
+  /printable-characters/1.0.42:
+    dev: false
+    resolution:
+      integrity: sha1-Pxjpd6m9jrN/zE/1ZZ176Qhos9g=
   /process-nextick-args/2.0.1:
     dev: true
     resolution:
@@ -2095,11 +2106,12 @@ packages:
     resolution:
       integrity: sha1-HBH5IY8HYImkfdUS+TxmmaaoHVI=
 specifiers:
+  as-table: 1.0.55
   colorette: 1.1.0
   eslint: 6.8.0
   eslint-config-k03mad: 4.2.0
   eslint-plugin-const-case: 1.2.2
-  eslint-plugin-jsdoc: 22.1.0
+  eslint-plugin-jsdoc: 23.0.0
   eslint-plugin-node: 11.1.0
   eslint-plugin-promise: 4.2.1
   eslint-plugin-sonarjs: 0.5.0
