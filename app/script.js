@@ -17,10 +17,23 @@ const PING_CONCURRENCY = 5;
 
 const MIKROTIK_INTERFACE = '/interface/pptp-client';
 
-const countriesBlacklist = [
+const countriesBlacklist = new Set([
     'Russia',
     'Ukraine',
-];
+]);
+
+const ipBlacklist = new Set([
+    // Latvia/Jurmala
+    '195.123.210.61',
+    // Estonia/Tallinn S2
+    '185.155.99.35',
+    // Estonia/Tallinn S3
+    '46.22.211.178',
+    // Finland/Helsinki S3
+    '194.34.132.152',
+    // Lithuania/Vilnius
+    '185.25.51.131',
+]);
 
 (async () => {
     try {
@@ -38,10 +51,13 @@ const countriesBlacklist = [
 
         log.countries(parsedList);
 
-        const filteredCountries = parsedList.filter(elem => !countriesBlacklist.includes(elem.country));
-        log.ip(parsedList, countriesBlacklist, filteredCountries);
+        const filtered = parsedList
+            .filter(elem => !countriesBlacklist.has(elem.country))
+            .filter(elem => !ipBlacklist.has(elem.ip));
 
-        const servers = await pMap(filteredCountries, async server => {
+        log.ip(parsedList, countriesBlacklist, ipBlacklist, filtered);
+
+        const servers = await pMap(filtered, async server => {
             const {time} = await ping.probe(server.ip);
             return {...server, ping: time};
         }, {concurrency: PING_CONCURRENCY});

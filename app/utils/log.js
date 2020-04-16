@@ -18,9 +18,11 @@ module.exports = {
         });
     },
 
-    ip: (parsedList, countriesBlacklist, filteredCountries) => {
+    ip: (parsedList, countriesBlacklist, ipBlacklist, filtered) => {
         console.log(`\nParsed IPs: ${parsedList.length}`);
-        console.log(`After countries filter (${countriesBlacklist}): ${filteredCountries.length}`);
+        console.log(`Filter countries: ${[...countriesBlacklist].join(', ')}`);
+        console.log(`Filter servers: ${[...ipBlacklist].join(', ')}`);
+        console.log(`IPs: ${filtered.length}`);
     },
 
     server: (before, comment) => {
