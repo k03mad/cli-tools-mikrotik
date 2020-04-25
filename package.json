@@ -6,14 +6,14 @@
   ],
   "repository": "k03mad/mikrotik-pptp-hidemy-ip",
   "engines": {
-    "node": ">=13"
+    "node": ">=14"
   },
   "dependencies": {
     "as-table": "1.0.55",
     "colorette": "1.1.0",
     "p-map": "4.0.0",
     "ping": "0.2.3",
-    "utils-mad": "7.4.6"
+    "utils-mad": "7.5.2"
   },
   "devDependencies": {
     "eslint": "6.8.0",
@@ -24,7 +24,7 @@
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-sonarjs": "0.5.0",
     "eslint-plugin-sort-requires": "2.1.0",
-    "eslint-plugin-unicorn": "18.0.1",
+    "eslint-plugin-unicorn": "19.0.0",
     "pre-commit": "1.2.2"
   },
   "scripts": {
