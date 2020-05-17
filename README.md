@@ -1,6 +1,6 @@
 Change Mikrotik PPTP IP to one from Hidemy.name API
 
-```npm i && npm run script```
+```npm i @k03mad/mikrotik-pptp-hidemy-ip -g```
 
 Required env variables:
 
