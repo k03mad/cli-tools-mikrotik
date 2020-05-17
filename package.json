@@ -25,15 +25,12 @@
     "eslint-plugin-sonarjs": "0.5.0",
     "eslint-plugin-sort-requires": "2.1.0",
     "eslint-plugin-unicorn": "20.0.0",
-    "pre-commit": "1.2.2"
+    "husky": "4.2.5"
   },
   "scripts": {
     "lint": "eslint --report-unused-disable-directives ./ --format codeframe",
     "setup": "npm i",
     "script": "node app/script.js"
   },
-  "pre-commit": [
-    "lint"
-  ],
   "license": "Unlicense"
 }
