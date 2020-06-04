@@ -31,7 +31,7 @@
     "husky": "4.2.5"
   },
   "scripts": {
-    "lint": "eslint --report-unused-disable-directives ./ --format codeframe",
+    "lint": "eslint ./ --report-unused-disable-directives --format=codeframe --ignore-pattern='!.*'",
     "setup": "npm i",
     "script": "node app/script.js"
   },
