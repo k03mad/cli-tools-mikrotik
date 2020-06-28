@@ -18,7 +18,7 @@ module.exports = {
     },
 
     ip: (parsedList, countriesBlacklist, ipBlacklist, filtered) => {
-        console.log(`\nServer count: ${parsedList.length}`);
+        console.log(`\nServers count: ${parsedList.length}`);
         console.log(`\nFilter countries: ${[...countriesBlacklist].join(', ') || '—'}`);
         console.log(`Filter ips: ${[...ipBlacklist].join(', ') || '—'}`);
         console.log(`\nServers count after filtering: ${filtered.length}`);
