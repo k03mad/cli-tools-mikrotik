@@ -4,7 +4,6 @@ const asTable = require('as-table');
 const {green, blue, yellow, cyan, magenta} = require('colorette');
 
 module.exports = {
-
     countries: list => {
         let country;
 
