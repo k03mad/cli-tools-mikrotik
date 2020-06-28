@@ -1,7 +1,6 @@
 'use strict';
 
 module.exports = {
-
     country: (a, b) => {
         if (a.country < b.country) {
             return -1;
