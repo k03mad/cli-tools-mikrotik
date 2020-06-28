@@ -26,7 +26,9 @@ const ipBlacklist = new Set([]);
 (async () => {
     try {
 
-        const {body} = await request.cache(API_URL, {searchParams: {serverlist: '', code}}, {diff: 1});
+        const {body} = await request.cache(API_URL, {
+            searchParams: {serverlist: '', code},
+        }, {expire: '1d'});
 
         const parsedList = body
             .split(VPN_LIST_NEWLINE)
