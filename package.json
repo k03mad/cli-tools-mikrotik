@@ -17,7 +17,7 @@
     "colorette": "1.2.0",
     "p-map": "4.0.0",
     "ping": "0.2.3",
-    "utils-mad": "8.0.5"
+    "utils-mad": "8.1.0"
   },
   "devDependencies": {
     "eslint": "7.3.1",
