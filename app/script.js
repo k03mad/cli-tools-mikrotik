@@ -16,26 +16,12 @@ const VPN_LIST_SEPARATOR = / - |, /g;
 
 const VPN_CONNECTION_RETRIES = 3;
 const PING_CONCURRENCY = 5;
+const CHOOSE_FROM_FASTEST = 30;
 
 const MIKROTIK_INTERFACE = '/interface/pptp-client';
 
-const countriesBlacklist = new Set([
-    'Russia',
-    'Ukraine',
-]);
-
-const ipBlacklist = new Set([
-    // Latvia/Jurmala
-    '195.123.210.61',
-    // Estonia/Tallinn S2
-    '185.155.99.35',
-    // Estonia/Tallinn S3
-    '46.22.211.178',
-    // Finland/Helsinki S3
-    '194.34.132.152',
-    // Lithuania/Vilnius
-    '185.25.51.131',
-]);
+const countriesBlacklist = new Set(['Russia', 'Ukraine']);
+const ipBlacklist = new Set([]);
 
 (async () => {
     try {
@@ -64,7 +50,7 @@ const ipBlacklist = new Set([
             return {...server, ping: time};
         }, {concurrency: PING_CONCURRENCY});
 
-        const fastest = servers.sort(sort.ping).slice(0, 10);
+        const fastest = servers.sort(sort.ping).slice(0, CHOOSE_FROM_FASTEST);
         log.pings(fastest);
 
         for (const choosenServer of array.shuffle(fastest)) {
