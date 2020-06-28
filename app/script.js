@@ -14,7 +14,7 @@ const API_URL = 'https://hidemy.name/api/pptp.php';
 const VPN_LIST_NEWLINE = /\r\n/;
 const VPN_LIST_SEPARATOR = / - |, /g;
 
-const VPN_CONNECTION_RETRIES = 3;
+const VPN_CONNECTION_RETRIES = 5;
 const PING_CONCURRENCY = 5;
 const CHOOSE_FROM_FASTEST = 30;
 
