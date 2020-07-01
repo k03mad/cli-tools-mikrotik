@@ -38,4 +38,12 @@ module.exports = {
         console.log('Choosing from fastest servers:\n');
         console.log(asTable(list));
     },
+
+    dns: server => {
+        console.log(`DNS: ${[...new Set(server.split(','))].join(', ')}`);
+    },
+
+    nat: status => {
+        console.log(`Pi NAT rules ${status}d`);
+    },
 };
