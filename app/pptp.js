@@ -56,7 +56,7 @@ const ipBlacklist = new Set([]);
         log.pings(fastest);
 
         for (const choosenServer of array.shuffle(fastest)) {
-            const comment = `${choosenServer.country}/${choosenServer.city}/${choosenServer.ping}ms`;
+            const comment = `${choosenServer.country} :: ${choosenServer.city} :: ${choosenServer.ping}ms`;
 
             const [before] = await mikrotik.write(`${MIKROTIK_INTERFACE}/print`);
 

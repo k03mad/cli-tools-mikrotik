@@ -39,11 +39,13 @@ module.exports = {
         console.log(asTable(list));
     },
 
-    dns: server => {
-        console.log(`DNS: ${[...new Set(server.split(','))].join(', ')}`);
+    dns: (serverName, serverIp) => {
+        console.log(`${yellow('DNS:')} ${green(serverName)}\n`);
+        console.log(asTable([[...new Set(serverIp.split(','))]]));
     },
 
-    nat: status => {
-        console.log(`Pi NAT rules ${status}d`);
+    nat: (status, rules) => {
+        console.log(`${yellow('Pi NAT rules')} ${magenta(`${status}d`)}\n`);
+        console.log(asTable(rules.map(elem => elem.comment ? elem.comment.split(' :: ') : '').filter(Boolean)));
     },
 };

@@ -16,7 +16,7 @@ const MIKROTIK_INTERFACE = '/ip/firewall/nat';
         const status = pi[0].disabled === 'false' ? 'disable' : 'enable';
         await mikrotik.write([...ids.map(id => [`${MIKROTIK_INTERFACE}/${status}`, `=.id=${id}`])]);
 
-        log.nat(status);
+        log.nat(status, pi);
     } catch (err) {
         print.ex(err, {full: true, exit: true});
     }
