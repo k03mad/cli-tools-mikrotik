@@ -16,15 +16,15 @@
   },
   "dependencies": {
     "as-table": "1.0.55",
-    "colorette": "1.2.0",
+    "colorette": "1.2.1",
     "p-map": "4.0.0",
     "ping": "0.2.3",
-    "utils-mad": "8.2.10"
+    "utils-mad": "9.1.1"
   },
   "devDependencies": {
     "eslint": "7.4.0",
-    "eslint-config-k03mad": "5.0.1",
-    "eslint-plugin-jsdoc": "28.6.1",
+    "eslint-config-k03mad": "5.0.2",
+    "eslint-plugin-jsdoc": "29.2.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-sonarjs": "0.5.0",
