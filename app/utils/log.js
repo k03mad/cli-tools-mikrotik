@@ -4,6 +4,8 @@ const asTable = require('as-table');
 const {green, blue, yellow, cyan, magenta} = require('colorette');
 
 module.exports = {
+    /* eslint-disable jsdoc/require-jsdoc */
+
     countries: list => {
         let country;
 

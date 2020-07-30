@@ -1,6 +1,8 @@
 'use strict';
 
 module.exports = {
+    /* eslint-disable jsdoc/require-jsdoc */
+
     country: (a, b) => {
         if (a.country < b.country) {
             return -1;
