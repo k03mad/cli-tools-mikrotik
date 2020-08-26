@@ -16,15 +16,15 @@
   },
   "dependencies": {
     "as-table": "1.0.55",
-    "colorette": "1.2.1",
+    "chalk": "4.1.0",
     "p-map": "4.0.0",
     "ping": "0.2.3",
-    "utils-mad": "9.1.4"
+    "utils-mad": "9.3.0"
   },
   "devDependencies": {
-    "eslint": "7.5.0",
+    "eslint": "7.7.0",
     "eslint-config-k03mad": "5.0.2",
-    "eslint-plugin-jsdoc": "30.0.3",
+    "eslint-plugin-jsdoc": "30.3.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-sonarjs": "0.5.0",
@@ -34,7 +34,7 @@
   },
   "scripts": {
     "lint": "eslint ./ --report-unused-disable-directives --format=codeframe --ignore-pattern='!.*'",
-    "setup": "npm i",
+    "setup": "pnpm i",
     "script": "node app/script.js"
   },
   "license": "Unlicense"

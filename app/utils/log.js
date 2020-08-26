@@ -1,7 +1,7 @@
 'use strict';
 
 const asTable = require('as-table');
-const {green, blue, yellow, cyan, magenta} = require('colorette');
+const {green, blue, yellow, cyan, magenta} = require('chalk');
 
 module.exports = {
     /* eslint-disable jsdoc/require-jsdoc */
