@@ -3,7 +3,7 @@
 'use strict';
 
 const log = require('./utils/log');
-const {argv: {_: [arg]}} = require('yargs');
+const {arg} = require('../env');
 const {mikrotik, print} = require('utils-mad');
 
 const MIKROTIK_INTERFACE = '/ip/firewall/nat';

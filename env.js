@@ -1,6 +1,9 @@
 'use strict';
 
+const {argv: {_: [arg]}} = require('yargs');
+
 module.exports = {
+    arg,
     hidemy: {
         code: process.env.HIDEMY_CODE,
     },

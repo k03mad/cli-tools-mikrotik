@@ -58,10 +58,6 @@ module.exports = {
     },
 
     arg: () => {
-        console.log([
-            yellow('No matched rules or arg not passed'),
-            'Pass rule name as command arg',
-            `Rules to switch will be found with ${green('.includes(arg)')}\n`,
-        ].join('\n'));
+        console.log(`${yellow('Add rule name after command')}\nRules to switch will be found with ${green('.includes(name)')}\n`);
     },
 };
