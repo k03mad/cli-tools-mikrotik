@@ -15,11 +15,12 @@
     "node": ">=14"
   },
   "dependencies": {
-    "as-table": "1.0.55",
     "chalk": "4.1.0",
     "p-map": "4.0.0",
     "ping": "0.2.3",
-    "utils-mad": "9.3.0"
+    "text-table": "0.2.0",
+    "utils-mad": "9.3.0",
+    "yargs": "15.4.1"
   },
   "devDependencies": {
     "eslint": "7.7.0",

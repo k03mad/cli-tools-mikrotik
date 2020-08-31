@@ -3,6 +3,8 @@
 'use strict';
 
 const log = require('./utils/log');
+const {argv: {_: [arg]}} = require('yargs');
+const {green} = require('chalk');
 const {mikrotik, print} = require('utils-mad');
 
 const MIKROTIK_INTERFACE = '/ip/firewall/nat';
@@ -10,13 +12,24 @@ const MIKROTIK_INTERFACE = '/ip/firewall/nat';
 (async () => {
     try {
         const nat = await mikrotik.write(`${MIKROTIK_INTERFACE}/print`);
-        const pi = nat.filter(elem => !elem.comment || elem.comment.startsWith('pi'));
-        const ids = pi.map(elem => elem['.id']);
+        const rules = nat.filter(elem => !elem.comment.startsWith('defconf') && elem.comment.includes(arg));
 
-        const status = pi[0].disabled === 'false' ? 'disable' : 'enable';
+        if (rules.length === 0) {
+            const withoutArg = nat.filter(elem => !elem.comment.startsWith('defconf'));
+            log.nat(withoutArg);
+
+            throw new Error('No matched rules'
+                + '\n\nPass rule name as command arg'
+                + `\nRules to switch will be found with ${green('.includes(arg)')}\n`,
+            );
+        }
+
+        const ids = rules.map(elem => elem['.id']);
+
+        const status = rules[0].disabled === 'false' ? 'disable' : 'enable';
         await mikrotik.write([...ids.map(id => [`${MIKROTIK_INTERFACE}/${status}`, `=.id=${id}`])]);
 
-        log.nat(status, pi);
+        log.nat(rules, status);
     } catch (err) {
         print.ex(err, {full: true, exit: true});
     }

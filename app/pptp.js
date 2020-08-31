@@ -25,7 +25,6 @@ const ipBlacklist = new Set([]);
 
 (async () => {
     try {
-
         const {body} = await request.cache(API_URL, {
             searchParams: {serverlist: '', code},
         }, {expire: '1d'});
@@ -87,7 +86,6 @@ const ipBlacklist = new Set([]);
                 }
             }
         }
-
     } catch (err) {
         print.ex(err, {full: true, exit: true});
     }
