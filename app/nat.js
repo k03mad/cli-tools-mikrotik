@@ -7,18 +7,19 @@ const {arg} = require('../env');
 const {mikrotik, print} = require('utils-mad');
 
 const MIKROTIK_INTERFACE = '/ip/firewall/nat';
+const DEF_CONF = 'defconf';
 
 (async () => {
     try {
         const nat = await mikrotik.write(`${MIKROTIK_INTERFACE}/print`);
-        const rules = nat.filter(elem => !elem.comment.startsWith('defconf') && elem.comment.includes(arg));
+        const rules = nat.filter(elem => !elem.comment.startsWith(DEF_CONF) && elem.comment.includes(arg));
 
         if (rules.length === 0) {
-            const withoutArg = nat.filter(elem => !elem.comment.startsWith('defconf'));
+            const withoutArg = nat.filter(elem => !elem.comment.startsWith(DEF_CONF));
+
             log.arg();
             log.nat(withoutArg);
         } else {
-
             const ids = rules.map(elem => elem['.id']);
 
             const status = rules[0].disabled === 'false' ? 'disable' : 'enable';

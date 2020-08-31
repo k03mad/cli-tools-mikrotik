@@ -54,10 +54,16 @@ module.exports = {
 
     nat: (rules, status) => {
         console.log(`${blue('Rules:')} ${status ? magenta(`${status}d`) : ''}\n`);
-        console.log(table(rules.map(elem => elem.comment ? elem.comment.split(' :: ') : '').filter(Boolean)));
+        console.log(table(rules.map(elem => [elem.action, elem.comment, status ? '' : `disabled: ${elem.disabled}`])));
     },
 
     arg: () => {
         console.log(`${yellow('Add rule name after command')}\nRules to switch will be found with ${green('.includes(name)')}\n`);
+    },
+
+    wifi: (name, status) => {
+        name && status
+            ? console.log(`${blue(`${name}:`)} ${magenta(status)}`)
+            : console.log(yellow('Add wifi version after command: 2 or 5'));
     },
 };
