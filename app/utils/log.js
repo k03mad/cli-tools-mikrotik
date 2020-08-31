@@ -53,7 +53,15 @@ module.exports = {
     },
 
     nat: (rules, status) => {
-        status && console.log(`${yellow('Pi NAT rules')} ${magenta(`${status}d`)}\n`);
+        console.log(`${blue('Rules:')} ${status ? magenta(`${status}d`) : ''}\n`);
         console.log(table(rules.map(elem => elem.comment ? elem.comment.split(' :: ') : '').filter(Boolean)));
+    },
+
+    arg: () => {
+        console.log([
+            yellow('No matched rules or arg not passed'),
+            'Pass rule name as command arg',
+            `Rules to switch will be found with ${green('.includes(arg)')}\n`,
+        ].join('\n'));
     },
 };
