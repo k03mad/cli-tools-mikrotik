@@ -1,0 +1,68 @@
+Arguments: 
+  /home/pi/.nvm/versions/node/v14.10.1/bin/node /home/pi/.nvm/versions/node/v14.10.1/bin/yarn install
+
+PATH: 
+  /home/pi/.nvm/versions/node/v14.10.1/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/home/pi/git/mikrotik-tools/node_modules/.bin:/home/pi/.nvm/versions/node/v14.10.1/bin:/data/data/com.termux/files/usr/bin/applets:/data/data/com.termux/files/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/opt/curl/bin:/usr/local/bin:/home/pi/.local/bin:/home/pi/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/games
+
+Yarn version: 
+  1.22.5
+
+Node version: 
+  14.10.1
+
+Platform: 
+  linux arm
+
+Trace: 
+  Error: ENOENT: no such file or directory, copyfile '/home/pi/.cache/yarn/v6/npm-ignore-5.1.8-f150a8b50a34289b33e22f5889abd4d8016f0e57-integrity/node_modules/ignore/CHANGELOG.md' -> '/home/pi/git/mikrotik-tools/node_modules/eslint-plugin-node/node_modules/ignore/CHANGELOG.md'
+
+npm manifest: 
+  {
+    "name": "@k03mad/mikrotik-tools",
+    "version": "3.0.1",
+    "maintainers": [
+      "Kirill Molchanov <k03.mad@gmail.com"
+    ],
+    "repository": "k03mad/mikrotik-tools",
+    "bin": {
+      "mad-mik-dns": "./app/dns.js",
+      "mad-mik-nat": "./app/nat.js",
+      "mad-mik-pptp": "./app/pptp.js",
+      "mad-mik-wlan": "./app/wlan.js"
+    },
+    "preferGlobal": true,
+    "engines": {
+      "node": ">=14"
+    },
+    "dependencies": {
+      "chalk": "4.1.0",
+      "p-map": "4.0.0",
+      "ping": "0.2.3",
+      "text-table": "0.2.0",
+      "utils-mad": "9.3.2",
+      "yargs": "16.0.3"
+    },
+    "devDependencies": {
+      "eslint": "7.9.0",
+      "eslint-config-k03mad": "5.0.2",
+      "eslint-plugin-jsdoc": "30.4.2",
+      "eslint-plugin-node": "11.1.0",
+      "eslint-plugin-promise": "4.2.1",
+      "eslint-plugin-sonarjs": "0.5.0",
+      "eslint-plugin-sort-requires": "2.1.0",
+      "eslint-plugin-unicorn": "21.0.0",
+      "husky": "4.3.0"
+    },
+    "scripts": {
+      "lint": "eslint ./ --report-unused-disable-directives --format=codeframe --ignore-pattern='!.*'",
+      "setup": "yarn install",
+      "script": "node app/script.js"
+    },
+    "license": "Unlicense"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

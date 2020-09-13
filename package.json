@@ -20,7 +20,7 @@
     "p-map": "4.0.0",
     "ping": "0.2.3",
     "text-table": "0.2.0",
-    "utils-mad": "9.3.1",
+    "utils-mad": "9.3.2",
     "yargs": "16.0.3"
   },
   "devDependencies": {
@@ -36,7 +36,7 @@
   },
   "scripts": {
     "lint": "eslint ./ --report-unused-disable-directives --format=codeframe --ignore-pattern='!.*'",
-    "setup": "pnpm i",
+    "setup": "yarn install",
     "script": "node app/script.js"
   },
   "license": "Unlicense"
