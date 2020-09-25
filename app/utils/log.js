@@ -58,12 +58,13 @@ module.exports = {
     },
 
     arg: () => {
-        console.log(`${yellow('Add rule name after command')}\nRules to switch will be found with ${green('.includes(name)')}\n`);
+        console.log(`${yellow('Add rule name after command')}\nRules to switch will be found with ${green('.includes(name)')} by rule comment\n`);
     },
 
-    wifi: (name, status) => {
-        name && status
-            ? console.log(`${blue(`${name}:`)} ${magenta(status)}`)
-            : console.log(yellow('Add wifi version after command: 2 or 5'));
+    int: (arg, status) => {
+        console.log(arg
+            ? `${blue(`${arg}:`)} ${magenta(status)}`
+            : yellow('Add interface name after command'),
+        );
     },
 };

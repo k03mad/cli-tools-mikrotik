@@ -9,7 +9,7 @@
     "mad-mik-dns": "./app/dns.js",
     "mad-mik-nat": "./app/nat.js",
     "mad-mik-pptp": "./app/pptp.js",
-    "mad-mik-wlan": "./app/wlan.js"
+    "mad-mik-int": "./app/int.js"
   },
   "preferGlobal": true,
   "engines": {

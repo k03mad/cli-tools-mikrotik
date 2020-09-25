@@ -6,18 +6,15 @@ const log = require('./utils/log');
 const {arg} = require('../env');
 const {mikrotik, print} = require('utils-mad');
 
-const WIFI_INTERFACE = 'wlan';
-
 (async () => {
     try {
-        let name, status;
+        let status;
 
-        if (['2', '5'].includes(arg)) {
-            name = WIFI_INTERFACE + arg;
-            status = await mikrotik.switch('/interface', name);
+        if (arg) {
+            status = await mikrotik.switch('/interface', arg);
         }
 
-        log.wifi(name, status);
+        log.int(arg, status);
     } catch (err) {
         print.ex(err, {full: true, exit: true});
     }
