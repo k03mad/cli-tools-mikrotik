@@ -1,7 +1,7 @@
 'use strict';
 
 const table = require('text-table');
-const {green, blue, yellow, cyan, magenta} = require('chalk');
+const {red, green, blue, yellow, cyan, magenta} = require('chalk');
 
 module.exports = {
     /* eslint-disable jsdoc/require-jsdoc */
@@ -66,5 +66,9 @@ module.exports = {
             ? `${blue(`${arg}:`)} ${magenta(status)}`
             : yellow('Add interface name after command'),
         );
+    },
+
+    station: status => {
+        console.log(`Switch station status to: ${status ? green('disabled') : red('enabled')}`);
     },
 };
