@@ -22,7 +22,7 @@ module.exports = {
         console.log(table(output));
     },
 
-    ip: (parsedList, countriesBlacklist, ipBlacklist, filtered, arg) => {
+    ip: (parsedList, countriesBlacklist, filtered, arg) => {
         console.log(`\nServers count: ${parsedList.length}`);
         console.log(arg ? `\nChoosing country from arg: ${arg}` : `\nFilter countries: ${[...countriesBlacklist].join(', ') || '—'}`);
         console.log(`\nServers count after filtering: ${filtered.length}`);

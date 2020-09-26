@@ -9,15 +9,17 @@ const {mikrotik: {station, wifi2}} = require('../env');
 
 /**
  * @param {Array} data
+ * @param {string} name
  * @returns {object}
  */
-const findStation = data => data.find(elem => elem.comment.includes('station'));
+const findRule = (data, name = 'station') => data.find(elem => elem.comment.includes(name));
 
 /**
  * @param {Array} data
+ * @param {string} name
  * @returns {object}
  */
-const getIdString = data => `=.id=${findStation(data)['.id']}`;
+const getIdString = (data, name) => `=.id=${findRule(data, name)['.id']}`;
 
 (async () => {
     try {
@@ -33,7 +35,7 @@ const getIdString = data => `=.id=${findStation(data)['.id']}`;
             .filter(elem => elem.comment.startsWith('pi'))
             .map(elem => elem['.id']);
 
-        const isStationEnabled = findStation(bridge).disabled === 'true';
+        const isStationEnabled = findRule(bridge).disabled === 'true';
 
         if (isStationEnabled) {
             await mikrotik.write([
@@ -42,6 +44,7 @@ const getIdString = data => `=.id=${findStation(data)['.id']}`;
                 ['/interface/wireless/set', getIdString(wifi), '=mode=ap-bridge'],
                 ['/interface/wireless/set', getIdString(wifi), `=ssid=${wifi2.ssid}`],
                 ['/interface/list/member/disable', getIdString(list)],
+                ['/ip/dhcp-client/disable', getIdString(dhcp)],
                 ['/ip/dhcp-client/disable', getIdString(dhcp)],
                 ...natRulesIds.map(id => ['/ip/firewall/nat/enable', `=.id=${id}`]),
             ]);

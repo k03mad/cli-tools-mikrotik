@@ -40,11 +40,10 @@ const countriesBlacklist = new Set(['Russia', 'Ukraine']);
 
         log.countries(parsedList);
 
-        const filtered = parsedList
-            .filter(elem => arg
-                ? countriesBlacklist.has(string.firstUpper(arg))
-                : !countriesBlacklist.has(elem.country),
-            );
+        const filtered = parsedList.filter(elem => arg
+            ? elem.country === string.firstUpper(arg)
+            : !countriesBlacklist.has(elem.country),
+        );
 
         log.ip(parsedList, countriesBlacklist, filtered, arg);
 
