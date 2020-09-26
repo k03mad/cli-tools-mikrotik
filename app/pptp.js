@@ -5,7 +5,8 @@
 const log = require('./utils/log');
 const pMap = require('p-map');
 const sort = require('./utils/sort');
-const {array, request, mikrotik, promise, print} = require('utils-mad');
+const {arg} = require('../env');
+const {array, request, mikrotik, promise, print, string} = require('utils-mad');
 const {hidemy: {code}} = require('../env');
 const {promise: ping} = require('ping');
 
@@ -21,7 +22,6 @@ const CHOOSE_FROM_FASTEST = 30;
 const MIKROTIK_INTERFACE = '/interface/pptp-client';
 
 const countriesBlacklist = new Set(['Russia', 'Ukraine']);
-const ipBlacklist = new Set([]);
 
 (async () => {
     try {
@@ -41,10 +41,12 @@ const ipBlacklist = new Set([]);
         log.countries(parsedList);
 
         const filtered = parsedList
-            .filter(elem => !countriesBlacklist.has(elem.country))
-            .filter(elem => !ipBlacklist.has(elem.ip));
+            .filter(elem => arg
+                ? countriesBlacklist.has(string.firstUpper(arg))
+                : !countriesBlacklist.has(elem.country),
+            );
 
-        log.ip(parsedList, countriesBlacklist, ipBlacklist, filtered);
+        log.ip(parsedList, countriesBlacklist, filtered, arg);
 
         const servers = await pMap(filtered, async server => {
             const {time} = await ping.probe(server.ip);
