@@ -30,7 +30,7 @@ const getIdString = data => `=.id=${findStation(data)['.id']}`;
         ]);
 
         const natRulesIds = nat
-            .filter(elem => !elem.comment.startsWith('defconf'))
+            .filter(elem => elem.comment.startsWith('pi'))
             .map(elem => elem['.id']);
 
         const isStationEnabled = findStation(bridge).disabled === 'true';
