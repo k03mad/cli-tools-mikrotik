@@ -3,7 +3,7 @@
 const {argv: {_: [arg]}} = require('yargs');
 
 module.exports = {
-    arg: String(arg).trim(),
+    arg: arg ? String(arg).trim() : arg,
 
     hidemy: {
         code: process.env.HIDEMY_CODE,
