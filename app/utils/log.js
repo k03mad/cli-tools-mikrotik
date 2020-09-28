@@ -1,7 +1,7 @@
 'use strict';
 
 const table = require('text-table');
-const {red, green, blue, yellow, cyan, magenta} = require('chalk');
+const {green, blue, yellow, cyan, magenta} = require('chalk');
 
 module.exports = {
     /* eslint-disable jsdoc/require-jsdoc */
@@ -67,7 +67,10 @@ module.exports = {
         );
     },
 
-    station: status => {
-        console.log(`Switch station status to: ${status ? green('disabled') : red('enabled')}`);
+    station: spot => {
+        console.log(spot
+            ? `Turn on and switch station to: ${magenta(spot.name)}`
+            : `Turn off station and ${green('return WiFi 2.4')}`,
+        );
     },
 };

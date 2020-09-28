@@ -10,9 +10,7 @@ module.exports = {
     },
     mikrotik: {
         host: process.env.MIKROTIK_HOST,
-        station: {
-            ssid: process.env.MIKROTIK_STATION_SSID,
-        },
+        station: process.env.MIKROTIK_STATION,
         wifi2: {
             ssid: process.env.MIKROTIK_WIFI2_SSID,
         },
@@ -21,4 +19,3 @@ module.exports = {
         host: process.env.PI_HOST,
     },
 };
-// TRENDnet651;
