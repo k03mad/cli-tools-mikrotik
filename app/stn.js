@@ -66,6 +66,7 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
 
                 ['/interface/wireless/set', getIdString(wifi), '=security-profile=station'],
                 ['/interface/wireless/set', getIdString(wifi), '=mode=station'],
+                ['/interface/wireless/set', getIdString(wifi), '=name=wan2-station'],
                 ['/interface/wireless/set', getIdString(wifi), `=ssid=${spot.name}`],
 
                 ['/interface/bridge/port/disable', getIdString(bridge)],
@@ -83,6 +84,7 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
 
                 ['/interface/wireless/set', getIdString(wifi), '=security-profile=default'],
                 ['/interface/wireless/set', getIdString(wifi), '=mode=ap-bridge'],
+                ['/interface/wireless/set', getIdString(wifi), '=name=wlan1-2.4'],
                 ['/interface/wireless/set', getIdString(wifi), `=ssid=${wifi2.ssid}`],
 
                 ['/interface/bridge/port/enable', getIdString(bridge)],

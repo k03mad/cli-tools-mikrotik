@@ -60,10 +60,10 @@ module.exports = {
         console.log(`${yellow('Add rule name after command')}\nRules to switch will be found with ${green('.includes(name)')} by rule comment\n`);
     },
 
-    int: (arg, status) => {
+    int: (arg, status, names) => {
         console.log(arg
             ? `${blue(`${arg}:`)} ${magenta(status)}`
-            : yellow('Add interface name after command'),
+            : yellow(`Add interface name after command, available:\n${green(names)}`),
         );
     },
 
