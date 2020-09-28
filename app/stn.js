@@ -56,6 +56,8 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
             }
 
             await mikrotik.write([
+                ['/ip/cloud/set', '=ddns-enabled=no'],
+
                 ['/interface/wireless/security-profiles/set', getIdString(profiles, 'station', 'name'), `=authentication-types=${spot.auth}`],
                 ['/interface/wireless/security-profiles/set', getIdString(profiles, 'station', 'name'), `=unicast-ciphers=${spot.ciphers}`],
                 ['/interface/wireless/security-profiles/set', getIdString(profiles, 'station', 'name'), `=group-ciphers=${spot.ciphers}`],
@@ -69,6 +71,7 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
                 ['/interface/bridge/port/disable', getIdString(bridge)],
                 ['/interface/ethernet/disable', getIdString(ether, 'provider')],
                 ['/interface/list/member/enable', getIdString(list)],
+
                 ['/ip/dhcp-client/enable', getIdString(dhcp)],
                 ...natRulesIds.map(id => ['/ip/firewall/nat/disable', `=.id=${id}`]),
             ]);
@@ -76,12 +79,16 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
             log.station(spot);
         } else {
             await mikrotik.write([
-                ['/interface/bridge/port/enable', getIdString(bridge)],
+                ['/ip/cloud/set', '=ddns-enabled=yes'],
+
                 ['/interface/wireless/set', getIdString(wifi), '=security-profile=default'],
                 ['/interface/wireless/set', getIdString(wifi), '=mode=ap-bridge'],
                 ['/interface/wireless/set', getIdString(wifi), `=ssid=${wifi2.ssid}`],
+
+                ['/interface/bridge/port/enable', getIdString(bridge)],
                 ['/interface/ethernet/enable', getIdString(ether, 'provider')],
                 ['/interface/list/member/disable', getIdString(list)],
+
                 ['/ip/dhcp-client/disable', getIdString(dhcp)],
                 ...natRulesIds.map(id => ['/ip/firewall/nat/enable', `=.id=${id}`]),
             ]);
