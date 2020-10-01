@@ -74,7 +74,10 @@ module.exports = {
         );
     },
 
-    bup: () => {
-        console.log('Backup script started');
+    bup: done => {
+        console.log(done
+            ? 'Backup script finished'
+            : 'Backup script started...',
+        );
     },
 };
