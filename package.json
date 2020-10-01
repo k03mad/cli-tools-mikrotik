@@ -6,6 +6,7 @@
   ],
   "repository": "k03mad/mikrotik-tools",
   "bin": {
+    "mad-mik-bup": "./app/bup.js",
     "mad-mik-dns": "./app/dns.js",
     "mad-mik-int": "./app/int.js",
     "mad-mik-nat": "./app/nat.js",
@@ -27,7 +28,7 @@
   "devDependencies": {
     "eslint": "7.10.0",
     "eslint-config-k03mad": "5.0.4",
-    "eslint-plugin-jsdoc": "30.6.1",
+    "eslint-plugin-jsdoc": "30.6.2",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-sonarjs": "0.5.0",

@@ -73,4 +73,8 @@ module.exports = {
             : `Turn off station and ${green('return WiFi 2.4')}`,
         );
     },
+
+    bup: () => {
+        console.log('Backup script started');
+    },
 };
