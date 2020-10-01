@@ -15,15 +15,11 @@ const MIKROTIK_INTERFACE = '/ip/firewall/nat';
 
         let lastComment;
         nat.forEach(elem => {
-            if (elem.comment) {
-                lastComment = elem.comment;
-            } else {
-                elem.comment = lastComment;
-            }
+            elem.comment
+                ? lastComment = elem.comment
+                : elem.comment = lastComment;
 
-            if (elem.comment.includes(arg)) {
-                rules.push(elem);
-            }
+            elem.comment.includes(arg) && rules.push(elem);
         });
 
         if (rules.length > 0) {
