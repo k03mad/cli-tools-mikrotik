@@ -27,19 +27,14 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
 
 (async () => {
     try {
-        const [bridge, wifi, list, dhcp, nat, ether, profiles] = await mikrotik.write([
+        const [bridge, wifi, list, dhcp, ether, profiles] = await mikrotik.write([
             ['/interface/bridge/port/print'],
             ['/interface/wireless/print'],
             ['/interface/list/member/print'],
             ['/ip/dhcp-client/print'],
-            ['/ip/firewall/nat/print'],
             ['/interface/ethernet/print'],
             ['/interface/wireless/security-profiles/print'],
         ]);
-
-        const natRulesIds = nat
-            .filter(elem => elem.comment.startsWith('pi'))
-            .map(elem => elem['.id']);
 
         if (arg) {
             const spots = station
@@ -66,7 +61,7 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
 
                 ['/interface/wireless/set', getIdString(wifi), '=security-profile=station'],
                 ['/interface/wireless/set', getIdString(wifi), '=mode=station'],
-                ['/interface/wireless/set', getIdString(wifi), '=name=wan2-station'],
+                ['/interface/wireless/set', getIdString(wifi), '=name=wan2'],
                 ['/interface/wireless/set', getIdString(wifi), `=ssid=${spot.name}`],
 
                 ['/interface/bridge/port/disable', getIdString(bridge)],
@@ -74,7 +69,6 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
                 ['/interface/list/member/enable', getIdString(list)],
 
                 ['/ip/dhcp-client/enable', getIdString(dhcp)],
-                ...natRulesIds.map(id => ['/ip/firewall/nat/disable', `=.id=${id}`]),
             ]);
 
             log.station(spot);
@@ -84,7 +78,7 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
 
                 ['/interface/wireless/set', getIdString(wifi), '=security-profile=default'],
                 ['/interface/wireless/set', getIdString(wifi), '=mode=ap-bridge'],
-                ['/interface/wireless/set', getIdString(wifi), '=name=wlan1-2.4'],
+                ['/interface/wireless/set', getIdString(wifi), '=name=wlan1'],
                 ['/interface/wireless/set', getIdString(wifi), `=ssid=${wifi2.ssid}`],
 
                 ['/interface/bridge/port/enable', getIdString(bridge)],
@@ -92,7 +86,6 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
                 ['/interface/list/member/disable', getIdString(list)],
 
                 ['/ip/dhcp-client/disable', getIdString(dhcp)],
-                ...natRulesIds.map(id => ['/ip/firewall/nat/enable', `=.id=${id}`]),
             ]);
 
             log.station();
