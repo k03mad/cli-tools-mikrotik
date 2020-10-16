@@ -10,10 +10,6 @@ module.exports = {
     },
     mikrotik: {
         host: process.env.MIKROTIK_HOST,
-        station: process.env.MIKROTIK_STATION,
-        wifi2: {
-            ssid: process.env.MIKROTIK_WIFI2_SSID,
-        },
     },
     pi: {
         host: process.env.PI_HOST,

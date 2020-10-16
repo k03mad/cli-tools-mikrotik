@@ -6,7 +6,6 @@
 const log = require('./utils/log');
 const {arg} = require('../env');
 const {mikrotik, print} = require('utils-mad');
-const {mikrotik: {station, wifi2}} = require('../env');
 
 /**
  * @param {Array} data
@@ -36,9 +35,23 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
             ['/interface/wireless/security-profiles/print'],
         ]);
 
+        const stationComment = findRule(wifi).comment;
+
+        const id = {
+            profiles: getIdString(profiles, 'station', 'name'),
+            wifi: getIdString(wifi),
+            bridge: getIdString(bridge),
+            ether: getIdString(ether, 'wan1', 'name'),
+            list: getIdString(list),
+            dhcp: getIdString(dhcp),
+        };
+
         if (arg) {
-            const spots = station
-                .split(';')
+            const [, stationName] = stationComment.match(/station:(\w+)/);
+            const [, spotsString] = stationComment.match(/station:\w+ \[(.+)]/);
+
+            const spots = spotsString
+                .split('; ')
                 .map(elem => {
                     const [name, password, auth, ciphers] = elem.split(':');
                     return {name, password, auth, ciphers};
@@ -53,39 +66,44 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
             await mikrotik.write([
                 ['/ip/cloud/set', '=ddns-enabled=no'],
 
-                ['/interface/wireless/security-profiles/set', getIdString(profiles, 'station', 'name'), `=authentication-types=${spot.auth}`],
-                ['/interface/wireless/security-profiles/set', getIdString(profiles, 'station', 'name'), `=unicast-ciphers=${spot.ciphers}`],
-                ['/interface/wireless/security-profiles/set', getIdString(profiles, 'station', 'name'), `=group-ciphers=${spot.ciphers}`],
-                ['/interface/wireless/security-profiles/set', getIdString(profiles, 'station', 'name'), `=wpa-pre-shared-key=${spot.password}`],
-                ['/interface/wireless/security-profiles/set', getIdString(profiles, 'station', 'name'), `=wpa2-pre-shared-key=${spot.password}`],
+                ['/interface/wireless/security-profiles/set', id.profiles, `=authentication-types=${spot.auth}`],
+                ['/interface/wireless/security-profiles/set', id.profiles, `=unicast-ciphers=${spot.ciphers}`],
+                ['/interface/wireless/security-profiles/set', id.profiles, `=group-ciphers=${spot.ciphers}`],
+                ['/interface/wireless/security-profiles/set', id.profiles, `=wpa-pre-shared-key=${spot.password}`],
+                ['/interface/wireless/security-profiles/set', id.profiles, `=wpa2-pre-shared-key=${spot.password}`],
 
-                ['/interface/wireless/set', getIdString(wifi), '=security-profile=station'],
-                ['/interface/wireless/set', getIdString(wifi), '=mode=station'],
-                ['/interface/wireless/set', getIdString(wifi), '=name=wan2'],
-                ['/interface/wireless/set', getIdString(wifi), `=ssid=${spot.name}`],
+                ['/interface/wireless/set', id.wifi, '=security-profile=station'],
+                ['/interface/wireless/set', id.wifi, '=mode=station'],
+                ['/interface/wireless/set', id.wifi, `=name=${stationName}`],
+                ['/interface/wireless/set', id.wifi, `=ssid=${spot.name}`],
+                ['/interface/wireless/set', id.wifi, `=comment=${stationComment.replace(/current:(.+?) ::/, `current:${spot.name} ::`)}`],
 
-                ['/interface/bridge/port/disable', getIdString(bridge)],
-                ['/interface/ethernet/disable', getIdString(ether, 'provider')],
-                ['/interface/list/member/enable', getIdString(list)],
+                ['/interface/bridge/port/disable', id.bridge],
+                ['/interface/ethernet/disable', id.ether],
+                ['/interface/list/member/enable', id.list],
 
-                ['/ip/dhcp-client/enable', getIdString(dhcp)],
+                ['/ip/dhcp-client/enable', id.dhcp],
             ]);
 
             log.station(spot);
         } else {
+            const [, wifiName] = stationComment.match(/ap:(\w+)/);
+            const [, apName] = stationComment.match(/ap:\w+ \[(.+?)]/);
+
             await mikrotik.write([
                 ['/ip/cloud/set', '=ddns-enabled=yes'],
 
-                ['/interface/wireless/set', getIdString(wifi), '=security-profile=default'],
-                ['/interface/wireless/set', getIdString(wifi), '=mode=ap-bridge'],
-                ['/interface/wireless/set', getIdString(wifi), '=name=wlan1'],
-                ['/interface/wireless/set', getIdString(wifi), `=ssid=${wifi2.ssid}`],
+                ['/interface/wireless/set', id.wifi, '=security-profile=default'],
+                ['/interface/wireless/set', id.wifi, '=mode=ap-bridge'],
+                ['/interface/wireless/set', id.wifi, `=name=${wifiName}`],
+                ['/interface/wireless/set', id.wifi, `=ssid=${apName}`],
+                ['/interface/wireless/set', id.wifi, `=comment=${stationComment.replace(/current:(.+?) ::/, `current:${apName} ::`)}`],
 
-                ['/interface/bridge/port/enable', getIdString(bridge)],
-                ['/interface/ethernet/enable', getIdString(ether, 'provider')],
-                ['/interface/list/member/disable', getIdString(list)],
+                ['/interface/bridge/port/enable', id.bridge],
+                ['/interface/ethernet/enable', id.ether],
+                ['/interface/list/member/disable', id.list],
 
-                ['/ip/dhcp-client/disable', getIdString(dhcp)],
+                ['/ip/dhcp-client/disable', id.dhcp],
             ]);
 
             log.station();
