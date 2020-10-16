@@ -22,13 +22,13 @@
     "p-map": "4.0.0",
     "ping": "0.3.0",
     "text-table": "0.2.0",
-    "utils-mad": "9.5.6",
-    "yargs": "16.0.3"
+    "utils-mad": "9.5.8",
+    "yargs": "16.1.0"
   },
   "devDependencies": {
-    "eslint": "7.10.0",
+    "eslint": "7.11.0",
     "eslint-config-k03mad": "5.0.4",
-    "eslint-plugin-jsdoc": "30.6.3",
+    "eslint-plugin-jsdoc": "30.6.5",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-sonarjs": "0.5.0",
