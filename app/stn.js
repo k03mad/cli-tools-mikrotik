@@ -46,17 +46,20 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
             dhcp: getIdString(dhcp),
         };
 
+        const [, wifiName] = stationComment.match(/ap:(\w+)/);
+        const [, apName] = stationComment.match(/ap:\w+ \[(.+?)]/);
+
+        const [, stationName] = stationComment.match(/station:(\w+)/);
+        const [, spotsString] = stationComment.match(/station:\w+ \[(.+)]/);
+
+        const spots = spotsString
+            .split('; ')
+            .map(elem => {
+                const [name, password, auth, ciphers] = elem.split(':');
+                return {name, password, auth, ciphers};
+            });
+
         if (arg) {
-            const [, stationName] = stationComment.match(/station:(\w+)/);
-            const [, spotsString] = stationComment.match(/station:\w+ \[(.+)]/);
-
-            const spots = spotsString
-                .split('; ')
-                .map(elem => {
-                    const [name, password, auth, ciphers] = elem.split(':');
-                    return {name, password, auth, ciphers};
-                });
-
             const spot = spots[Number(arg) - 1];
 
             if (!spot) {
@@ -87,9 +90,6 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
 
             log.station(spot);
         } else {
-            const [, wifiName] = stationComment.match(/ap:(\w+)/);
-            const [, apName] = stationComment.match(/ap:\w+ \[(.+?)]/);
-
             await mikrotik.write([
                 ['/ip/cloud/set', '=ddns-enabled=yes'],
 
@@ -106,7 +106,7 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
                 ['/ip/dhcp-client/disable', id.dhcp],
             ]);
 
-            log.station();
+            log.station(spots);
         }
     } catch (err) {
         print.ex(err, {full: true, exit: true});

@@ -68,9 +68,9 @@ module.exports = {
     },
 
     station: spot => {
-        console.log(spot
-            ? `Turn on and switch station to: ${magenta(spot.name)}`
-            : `Turn off station and ${green('return WiFi 2.4')}`,
+        console.log(Array.isArray(spot)
+            ? `Turn off station and ${green('return WiFi 2.4')}\n\nAvailable spots:\n${spot.map((elem, i) => `${++i}. ${elem.name}`).join('\n')}`
+            : `Turn on and switch station to: ${magenta(spot.name)}`,
         );
     },
 
