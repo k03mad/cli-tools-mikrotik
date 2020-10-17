@@ -55,7 +55,7 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
         const spots = spotsString
             .split('; ')
             .map(elem => {
-                const [name, password, auth, ciphers] = elem.split(':');
+                const [name, password, auth, ciphers] = elem.split(/:|\//);
                 return {name, password, auth, ciphers};
             });
 
@@ -79,7 +79,7 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
                 ['/interface/wireless/set', id.wifi, '=mode=station'],
                 ['/interface/wireless/set', id.wifi, `=name=${stationName}`],
                 ['/interface/wireless/set', id.wifi, `=ssid=${spot.name}`],
-                ['/interface/wireless/set', id.wifi, `=comment=${stationComment.replace(/current:(.+?) ::/, `current:${spot.name} ::`)}`],
+                ['/interface/wireless/set', id.wifi, `=comment=${stationComment.replace(/(.+?) ::/, `${spot.name} ::`)}`],
 
                 ['/interface/bridge/port/disable', id.bridge],
                 ['/interface/ethernet/disable', id.ether],
@@ -97,7 +97,7 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
                 ['/interface/wireless/set', id.wifi, '=mode=ap-bridge'],
                 ['/interface/wireless/set', id.wifi, `=name=${wifiName}`],
                 ['/interface/wireless/set', id.wifi, `=ssid=${apName}`],
-                ['/interface/wireless/set', id.wifi, `=comment=${stationComment.replace(/current:(.+?) ::/, `current:${apName} ::`)}`],
+                ['/interface/wireless/set', id.wifi, `=comment=${stationComment.replace(/(.+?) ::/, `${apName} ::`)}`],
 
                 ['/interface/bridge/port/enable', id.bridge],
                 ['/interface/ethernet/enable', id.ether],
