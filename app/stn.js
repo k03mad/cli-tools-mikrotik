@@ -63,7 +63,7 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
             const spot = spots[Number(arg) - 1];
 
             if (!spot) {
-                throw new Error(`No spot num ${arg}`);
+                throw new Error(`No spot found with num: ${arg}`);
             }
 
             await mikrotik.write([
