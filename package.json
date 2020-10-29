@@ -22,7 +22,7 @@
     "p-map": "4.0.0",
     "ping": "0.3.0",
     "text-table": "0.2.0",
-    "utils-mad": "9.6.5",
+    "utils-mad": "9.6.6",
     "yargs": "16.1.0"
   },
   "devDependencies": {
