@@ -11,7 +11,4 @@ module.exports = {
     mikrotik: {
         host: process.env.MIKROTIK_HOST,
     },
-    pi: {
-        host: process.env.PI_HOST,
-    },
 };
