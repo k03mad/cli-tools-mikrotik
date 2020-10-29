@@ -12,8 +12,7 @@ const MIKROTIK_DNS_SERVERS_COUNT = 3;
 
 const servers = {
     mikrotik: env.mikrotik.host,
-    pi: env.pi.host,
-    adguard: ['176.103.130.130', '176.103.130.131'],
+    adguard: ['94.140.14.14', '94.140.15.15'],
     cloudflare: ['1.1.1.1', '1.0.0.1'],
     google: ['8.8.8.8', '8.8.4.4'],
 };
