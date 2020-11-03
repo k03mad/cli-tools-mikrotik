@@ -10,9 +10,9 @@ const MIKROTIK_INTERFACE = '/ip/dns';
 
 const servers = {
     next: next.doh,
-    adg: 'https://94.140.14.14/dns-query',
-    google: 'https://8.8.8.8/dns-query',
-    cloudflare: 'https://1.1.1.1/dns-query',
+    adg: 'https://dns.adguard.com/dns-query',
+    google: 'https://dns.google/dns-query',
+    cloudflare: 'https://dns.cloudflare.com/dns-query',
 };
 
 const flushArg = 'flush';
