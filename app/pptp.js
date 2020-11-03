@@ -3,7 +3,6 @@
 'use strict';
 
 const pMap = require('p-map');
-const sort = require('./utils/sort');
 const table = require('text-table');
 const {arg} = require('../env');
 const {array, request, mikrotik, promise, print, string} = require('utils-mad');
@@ -37,7 +36,17 @@ const countriesBlacklist = new Set(['Russia', 'Ukraine']);
                 const [ip, country, city] = entry.split(VPN_LIST_SEPARATOR);
                 return {ip, country, city};
             })
-            .sort(sort.country);
+            .sort((a, b) => {
+                if (a.country < b.country) {
+                    return -1;
+                }
+
+                if (a.country > b.country) {
+                    return 1;
+                }
+
+                return 0;
+            });
 
         const output = [];
         let country;
@@ -67,7 +76,7 @@ const countriesBlacklist = new Set(['Russia', 'Ukraine']);
             return {...server, ping: time};
         }, {concurrency: PING_CONCURRENCY});
 
-        const fastest = servers.sort(sort.ping).slice(0, CHOOSE_FROM_FASTEST);
+        const fastest = servers.sort((a, b) => a.ping - b.ping).slice(0, CHOOSE_FROM_FASTEST);
 
         console.log('Choosing from fastest servers:\n');
         console.log(table([
