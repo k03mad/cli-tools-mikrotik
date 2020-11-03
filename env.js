@@ -11,7 +11,4 @@ module.exports = {
     mikrotik: {
         host: process.env.MIKROTIK_HOST,
     },
-    nextdns: {
-        hosts: process.env.NEXTDNS_HOSTS.split(','),
-    },
 };

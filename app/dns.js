@@ -12,7 +12,6 @@ const MIKROTIK_DNS_SERVERS_COUNT = 3;
 
 const servers = {
     mikrotik: env.mikrotik.host,
-    nextdns: env.nextdns.hosts,
     adguard: ['94.140.14.14', '94.140.15.15'],
     google: ['8.8.8.8', '8.8.4.4'],
     yandex: ['77.88.8.8', '77.88.8.1'],
