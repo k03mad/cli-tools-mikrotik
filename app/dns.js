@@ -2,52 +2,48 @@
 
 'use strict';
 
-const env = require('../env');
-const log = require('./utils/log');
-const {array, mikrotik, print, object} = require('utils-mad');
+const {arg, next} = require('../env');
+const {green, blue, yellow, cyan, magenta} = require('chalk');
+const {mikrotik, print} = require('utils-mad');
 
-const MIKROTIK_INTERFACE = '/ip/dhcp-server/network';
-const MIKROTIK_NETWORK_ID = 1;
-const MIKROTIK_DNS_SERVERS_COUNT = 3;
+const MIKROTIK_INTERFACE = '/ip/dns';
 
 const servers = {
-    mikrotik: env.mikrotik.host,
-    adguard: ['94.140.14.14', '94.140.15.15'],
-    google: ['8.8.8.8', '8.8.4.4'],
-    yandex: ['77.88.8.8', '77.88.8.1'],
+    next: next.doh,
+    adg: 'https://dns.adguard.com/dns-query',
+    google: 'https://dns.google/dns-query',
 };
+
+const flushArg = 'flush';
+const providerArg = 'provider';
 
 (async () => {
     try {
-        const prepareServers = {};
+        const server = servers[arg];
+        const flush = arg === flushArg;
+        const provider = arg === providerArg;
 
-        Object.entries(servers).forEach(([key, value]) => {
-            const ips = array.convert(value);
+        if (provider) {
+            await mikrotik.write([
+                [`${MIKROTIK_INTERFACE}/set`, '=use-doh-server='],
+                [`${MIKROTIK_INTERFACE}/set`, '=verify-doh-cert=no'],
+            ]);
+            console.log(`DNS: ${blue('provider')}`);
 
-            for (let i = ips.length; i < MIKROTIK_DNS_SERVERS_COUNT; i++) {
-                ips.push(ips[0]);
-            }
+        } else if (server) {
+            await mikrotik.write([
+                [`${MIKROTIK_INTERFACE}/set`, `=use-doh-server=${server}`],
+                [`${MIKROTIK_INTERFACE}/set`, '=verify-doh-cert=yes'],
+            ]);
+            console.log(`DNS: ${blue(server)}`);
 
-            prepareServers[key] = ips.join(',');
-        });
+        } else if (!flush) {
+            console.log(`Args: ${green(Object.keys(servers).join(', '))}, ${magenta(flushArg)}, ${cyan(providerArg)}`);
+            return;
+        }
 
-        const dhcp = await mikrotik.write(`${MIKROTIK_INTERFACE}/print`);
-        const nextServer = array.next(
-            Object.values(prepareServers),
-            dhcp[MIKROTIK_NETWORK_ID - 1]['dns-server'],
-        );
-
-        const serverName = object.reverse(prepareServers)[nextServer];
-        const serverNameType = nextServer.startsWith('192')
-            ? `local :: ${serverName}`
-            : `global :: ${serverName}`;
-
-        await mikrotik.write([
-            [`${MIKROTIK_INTERFACE}/set`, `=.id=*${MIKROTIK_NETWORK_ID}`, `=dns-server=${nextServer}`],
-            [`${MIKROTIK_INTERFACE}/set`, `=.id=*${MIKROTIK_NETWORK_ID}`, `=comment=DNS :: ${serverNameType}`],
-        ]);
-
-        log.dns(serverNameType, nextServer);
+        await mikrotik.write(`${MIKROTIK_INTERFACE}/cache/flush`);
+        console.log(yellow('Cache flushed'));
     } catch (err) {
         print.ex(err, {full: true, exit: true});
     }

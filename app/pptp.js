@@ -2,11 +2,12 @@
 
 'use strict';
 
-const log = require('./utils/log');
 const pMap = require('p-map');
 const sort = require('./utils/sort');
+const table = require('text-table');
 const {arg} = require('../env');
 const {array, request, mikrotik, promise, print, string} = require('utils-mad');
+const {green, blue, yellow, cyan, magenta} = require('chalk');
 const {hidemy: {code}} = require('../env');
 const {promise: ping} = require('ping');
 
@@ -38,14 +39,28 @@ const countriesBlacklist = new Set(['Russia', 'Ukraine']);
             })
             .sort(sort.country);
 
-        log.countries(parsedList);
+        const output = [];
+        let country;
+
+        parsedList.forEach(elem => {
+            if (country !== elem.country) {
+                output.push([`\n${yellow(elem.country)}`]);
+            }
+
+            output.push([green(elem.city), blue(elem.ip)]);
+            ({country} = elem);
+        });
+
+        console.log(table(output));
 
         const filtered = parsedList.filter(elem => arg
             ? elem.country === string.firstUpper(arg)
             : !countriesBlacklist.has(elem.country),
         );
 
-        log.ip(parsedList, countriesBlacklist, filtered, arg);
+        console.log(`\nServers count: ${parsedList.length}`);
+        console.log(arg ? `\nChoosing country from arg: ${arg}` : `\nFilter countries: ${[...countriesBlacklist].join(', ') || '—'}`);
+        console.log(`\nServers count after filtering: ${filtered.length}`);
 
         const servers = await pMap(filtered, async server => {
             const {time} = await ping.probe(server.ip);
@@ -53,7 +68,12 @@ const countriesBlacklist = new Set(['Russia', 'Ukraine']);
         }, {concurrency: PING_CONCURRENCY});
 
         const fastest = servers.sort(sort.ping).slice(0, CHOOSE_FROM_FASTEST);
-        log.pings(fastest);
+
+        console.log('Choosing from fastest servers:\n');
+        console.log(table([
+            ['', '', '', 'ping'],
+            ...fastest.map(elem => Object.values(elem)),
+        ]));
 
         for (const choosenServer of array.shuffle(fastest)) {
             const comment = `${choosenServer.country} :: ${choosenServer.city} :: ${choosenServer.ping}ms`;
@@ -61,7 +81,9 @@ const countriesBlacklist = new Set(['Russia', 'Ukraine']);
             const [before] = await mikrotik.write(`${MIKROTIK_INTERFACE}/print`);
 
             if (before['connect-to'] !== choosenServer.ip) {
-                log.server(before, comment);
+                console.log(cyan(`\nCurrent PPTP Server: ${before.comment}`));
+                console.log(`${blue(before['connect-to'])}: running ${before.running}`);
+                console.log(magenta(`\nNew PPTP Server: ${comment}`));
 
                 await mikrotik.write([
                     [`${MIKROTIK_INTERFACE}/set`, `=.id=${before['.id']}`, `=connect-to=${choosenServer.ip}`],
@@ -74,7 +96,7 @@ const countriesBlacklist = new Set(['Russia', 'Ukraine']);
                     await promise.delay();
 
                     const [after] = await mikrotik.write(`${MIKROTIK_INTERFACE}/print`);
-                    log.connect(after);
+                    console.log(`${blue(after['connect-to'])}: running ${after.running}`);
 
                     if (after.running === 'true') {
                         found = true;

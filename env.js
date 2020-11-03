@@ -11,4 +11,7 @@ module.exports = {
     mikrotik: {
         host: process.env.MIKROTIK_HOST,
     },
+    next: {
+        doh: process.env.NEXT_DNS_DOH,
+    },
 };

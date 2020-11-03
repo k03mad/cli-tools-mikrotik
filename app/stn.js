@@ -3,8 +3,8 @@
 
 'use strict';
 
-const log = require('./utils/log');
 const {arg} = require('../env');
+const {green, magenta} = require('chalk');
 const {mikrotik, print} = require('utils-mad');
 
 /**
@@ -88,7 +88,7 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
                 ['/ip/dhcp-client/enable', id.dhcp],
             ]);
 
-            log.station(spot);
+            console.log(`Turn on and switch station to: ${magenta(spot.name)}`);
         } else {
             await mikrotik.write([
                 ['/ip/cloud/set', '=ddns-enabled=yes'],
@@ -106,7 +106,8 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
                 ['/ip/dhcp-client/disable', id.dhcp],
             ]);
 
-            log.station(spots);
+            console.log(`Turn off station and ${green('return WiFi 2.4')}\n\nAvailable spots:`
+                      + `\n${spots.map((elem, i) => `${++i}. ${elem.name}`).join('\n')}`);
         }
     } catch (err) {
         print.ex(err, {full: true, exit: true});

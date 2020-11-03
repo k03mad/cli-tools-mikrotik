@@ -580,10 +580,10 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-k03mad@5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-k03mad/-/eslint-config-k03mad-5.1.0.tgz#c69f8fe9adc27e82b0e07797339190dd87fdbaf4"
-  integrity sha512-UMETSy5wf0UcM2dJ6ER5NctOF1GWboqH7iVRt32SJiP/sGcjuSxIiGQV82at9aORcTWpGNWdZdkEwjH1Vi76gw==
+eslint-config-k03mad@5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-k03mad/-/eslint-config-k03mad-5.1.1.tgz#cef482b4b02861e4c9b55fdfccebd5bbe59a3193"
+  integrity sha512-Iztxh8E7j3MIHzICAUFTPfUTlwY5iq8wEf2vYT+2g0R5YcF+VMl0N6c4ENlPQsxwrdcyKeb4Z60eXtmKgdyJqg==
 
 eslint-plugin-es@^3.0.0:
   version "3.0.1"

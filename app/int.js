@@ -2,8 +2,8 @@
 
 'use strict';
 
-const log = require('./utils/log');
 const {arg} = require('../env');
+const {green, blue, yellow, magenta} = require('chalk');
 const {mikrotik, print} = require('utils-mad');
 
 (async () => {
@@ -12,12 +12,12 @@ const {mikrotik, print} = require('utils-mad');
 
         if (arg) {
             status = await mikrotik.switch('/interface', arg);
+            console.log(`${blue(`${arg}:`)} ${magenta(status)}`);
         } else {
             const interfaces = await mikrotik.write(['/interface/print']);
             names = interfaces.map(elem => elem.name).join(', ');
+            console.log(yellow(`Add interface name after command, available:\n${green(names)}`));
         }
-
-        log.int(arg, status, names);
     } catch (err) {
         print.ex(err, {full: true, exit: true});
     }
