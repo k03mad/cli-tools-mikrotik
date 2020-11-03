@@ -14,7 +14,6 @@ const servers = {
     mikrotik: env.mikrotik.host,
     nextdns: env.nextdns.hosts,
     adguard: ['94.140.14.14', '94.140.15.15'],
-    cloudflare: ['1.1.1.1', '1.0.0.1'],
     google: ['8.8.8.8', '8.8.4.4'],
     yandex: ['77.88.8.8', '77.88.8.1'],
 };
