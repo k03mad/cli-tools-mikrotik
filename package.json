@@ -28,7 +28,7 @@
   "devDependencies": {
     "eslint": "7.12.1",
     "eslint-config-k03mad": "5.1.0",
-    "eslint-plugin-jsdoc": "30.7.3",
+    "eslint-plugin-jsdoc": "30.7.6",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-sonarjs": "0.5.0",
