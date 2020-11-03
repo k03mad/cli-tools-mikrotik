@@ -9,8 +9,8 @@ const {mikrotik, print} = require('utils-mad');
 const MIKROTIK_INTERFACE = '/ip/dns';
 
 const servers = {
-    next: next.doh,
-    adg: 'https://dns.adguard.com/dns-query',
+    nextdns: next.doh,
+    adguard: 'https://dns.adguard.com/dns-query',
     google: 'https://dns.google/dns-query',
     cloudflare: 'https://dns.cloudflare.com/dns-query',
 };
