@@ -16,7 +16,7 @@ const {mikrotik, print} = require('utils-mad');
         } else {
             const interfaces = await mikrotik.write(['/interface/print']);
             names = interfaces.map(elem => elem.name).join(', ');
-            console.log(yellow(`Args:\n${green(names)}`));
+            console.log(yellow(`Args: ${green(names)}`));
         }
     } catch (err) {
         print.ex(err, {full: true, exit: true});
