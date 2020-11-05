@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-/* eslint-disable sonarjs/no-duplicate-string */
 
 'use strict';
 
