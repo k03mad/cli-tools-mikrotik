@@ -14,7 +14,7 @@
   },
   "preferGlobal": true,
   "engines": {
-    "node": ">=15.1"
+    "node": ">=15"
   },
   "dependencies": {
     "chalk": "4.1.0",
