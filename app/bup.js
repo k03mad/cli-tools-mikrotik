@@ -9,7 +9,7 @@ const {mikrotik, print} = require('utils-mad');
         const scripts = await mikrotik.write('/system/script/print');
         console.log('Backup script started...');
 
-        const backup = scripts.find(elem => elem.name === 'BackupAndUpdate');
+        const backup = scripts.find(elem => elem.name === 'backup');
         await mikrotik.write(['/system/script/run', `=.id=${backup['.id']}`]);
 
         console.log('Backup script finished');
