@@ -19,18 +19,18 @@
   "dependencies": {
     "chalk": "4.1.0",
     "text-table": "0.2.0",
-    "utils-mad": "9.7.7",
-    "yargs": "16.1.1"
+    "utils-mad": "9.10.9",
+    "yargs": "16.2.0"
   },
   "devDependencies": {
-    "eslint": "7.14.0",
-    "eslint-config-k03mad": "6.0.2",
-    "eslint-plugin-jsdoc": "30.7.8",
+    "eslint": "7.17.0",
+    "eslint-config-k03mad": "6.0.4",
+    "eslint-plugin-jsdoc": "30.7.13",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-sort-requires": "2.1.0",
-    "eslint-plugin-unicorn": "23.0.0",
-    "husky": "4.3.0"
+    "eslint-plugin-unicorn": "25.0.1",
+    "husky": "4.3.6"
   },
   "scripts": {
     "lint": "eslint ./ --report-unused-disable-directives --format=codeframe --ignore-pattern='!.*'",
