@@ -1,9 +1,11 @@
 'use strict';
 
-const {argv: {_: [arg]}} = require('yargs');
+const {argv} = require('yargs');
+
+const args = argv._;
 
 module.exports = {
-    arg: arg ? String(arg).trim() : arg,
+    args: args.length > 0 ? args : [],
 
     mikrotik: {
         host: process.env.MIKROTIK_HOST,

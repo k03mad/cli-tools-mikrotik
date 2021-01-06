@@ -2,12 +2,13 @@
 
 'use strict';
 
-const {arg} = require('../env');
+const {args} = require('../env');
 const {green, blue, yellow, magenta} = require('chalk');
 const {mikrotik, print} = require('utils-mad');
 
 (async () => {
     try {
+        const [arg] = args;
         let names, status;
 
         if (arg) {

@@ -2,7 +2,7 @@
 
 'use strict';
 
-const {arg, next} = require('../env');
+const {args, next} = require('../env');
 const {green, blue, yellow, cyan, magenta} = require('chalk');
 const {mikrotik, print} = require('utils-mad');
 
@@ -20,6 +20,8 @@ const providerArg = 'provider';
 
 (async () => {
     try {
+        const [arg] = args;
+
         const server = servers[arg];
         const flush = arg === flushArg;
         const provider = arg === providerArg;

@@ -2,7 +2,7 @@
 
 'use strict';
 
-const {arg} = require('../env');
+const {args} = require('../env');
 const {green, magenta} = require('chalk');
 const {mikrotik, print} = require('utils-mad');
 
@@ -25,6 +25,8 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
 
 (async () => {
     try {
+        const [arg] = args;
+
         const [bridge, wifi, list, dhcp, ether, profiles] = await mikrotik.write([
             ['/interface/bridge/port/print'],
             ['/interface/wireless/print'],

@@ -3,7 +3,7 @@
 'use strict';
 
 const table = require('text-table');
-const {arg} = require('../env');
+const {args} = require('../env');
 const {green, blue, yellow, magenta, red} = require('chalk');
 const {mikrotik, print} = require('utils-mad');
 
@@ -20,7 +20,7 @@ const MIKROTIK_INTERFACE = '/ip/firewall/nat';
                 ? lastComment = elem.comment
                 : elem.comment = lastComment;
 
-            elem.comment.includes(arg) && rules.push(elem);
+            elem.comment.includes(args[0]) && rules.push(elem);
         });
 
         if (rules.length > 0) {
