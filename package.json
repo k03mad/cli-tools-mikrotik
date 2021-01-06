@@ -1,10 +1,10 @@
 {
-  "name": "@k03mad/mikrotik-tools",
+  "name": "@k03mad/cli-tools-mikrotik",
   "version": "7.0.7",
   "maintainers": [
     "Kirill Molchanov <k03.mad@gmail.com"
   ],
-  "repository": "k03mad/mikrotik-tools",
+  "repository": "k03mad/cli-tools-mikrotik",
   "bin": {
     "mad-mik-bup": "app/bup.js",
     "mad-mik-dns": "app/dns.js",
