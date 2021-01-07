@@ -6,11 +6,11 @@
   ],
   "repository": "k03mad/cli-tools-mikrotik",
   "bin": {
-    "mad-mik-bup": "app/bup.js",
-    "mad-mik-dns": "app/dns.js",
-    "mad-mik-int": "app/int.js",
-    "mad-mik-nat": "app/nat.js",
-    "mad-mik-stn": "app/stn.js"
+    "mad_mik_bup": "app/bup.js",
+    "mad_mik_dns": "app/dns.js",
+    "mad_mik_int": "app/int.js",
+    "mad_mik_nat": "app/nat.js",
+    "mad_mik_stn": "app/stn.js"
   },
   "preferGlobal": true,
   "engines": {
