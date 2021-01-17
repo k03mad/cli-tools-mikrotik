@@ -1,7 +1,7 @@
 {
   "name": "@k03mad/cli-tools-mikrotik",
   "description": "My CLI tools",
-  "version": "7.0.13",
+  "version": "7.0.14",
   "maintainers": [
     "Kirill Molchanov <k03.mad@gmail.com"
   ],
