@@ -19,7 +19,7 @@
   "dependencies": {
     "chalk": "4.1.0",
     "text-table": "0.2.0",
-    "utils-mad": "10.1.0",
+    "utils-mad": "10.2.0",
     "yargs": "16.2.0"
   },
   "devDependencies": {
