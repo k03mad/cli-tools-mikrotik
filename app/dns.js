@@ -4,7 +4,7 @@
 
 const {args, next} = require('../env');
 const {green, blue, yellow, cyan, magenta} = require('chalk');
-const {mikrotik, print} = require('utils-mad');
+const {mikrotik, print} = require('@k03mad/utils');
 
 const MIKROTIK_INTERFACE = '/ip/dns';
 

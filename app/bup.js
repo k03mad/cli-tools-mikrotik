@@ -2,7 +2,7 @@
 
 'use strict';
 
-const {mikrotik, print} = require('utils-mad');
+const {mikrotik, print} = require('@k03mad/utils');
 
 (async () => {
     try {

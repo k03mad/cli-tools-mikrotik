@@ -5,7 +5,7 @@
 const table = require('text-table');
 const {args} = require('../env');
 const {green, blue, yellow, magenta, red} = require('chalk');
-const {mikrotik, print} = require('utils-mad');
+const {mikrotik, print} = require('@k03mad/utils');
 
 const MIKROTIK_INTERFACE = '/ip/firewall/nat';
 

@@ -4,7 +4,7 @@
 
 const {args} = require('../env');
 const {green, magenta} = require('chalk');
-const {mikrotik, print} = require('utils-mad');
+const {mikrotik, print} = require('@k03mad/utils');
 
 /**
  * @param {Array} data
