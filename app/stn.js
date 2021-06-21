@@ -23,7 +23,8 @@ const findRule = (data, name = 'station', key = 'comment') => data
  */
 const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id']}`;
 
-const wifiArg = 'wifi';
+const wifiOnArg = 'wifi_on';
+const wifiOffArg = 'wifi_off';
 
 (async () => {
     try {
@@ -93,7 +94,7 @@ const wifiArg = 'wifi';
             ]);
 
             console.log(`Turn on and switch station to: ${magenta(spot.name)}`);
-        } else if (arg === wifiArg) {
+        } else if ([wifiOnArg, wifiOffArg].includes(arg)) {
             await mikrotik.write([
                 ['/ip/cloud/set', '=ddns-enabled=yes'],
 
@@ -102,7 +103,6 @@ const wifiArg = 'wifi';
                 ['/interface/wireless/set', id.wifi, `=name=${wifiName}`],
                 ['/interface/wireless/set', id.wifi, `=ssid=${apName}`],
                 ['/interface/wireless/set', id.wifi, `=comment=${stationComment.replace(/(.+?) ::/, `${apName} ::`)}`],
-                ['/interface/wireless/disable', id.wifi],
 
                 ['/interface/bridge/port/enable', id.bridge],
                 ['/interface/ethernet/enable', id.ether],
@@ -111,10 +111,18 @@ const wifiArg = 'wifi';
                 ['/ip/dhcp-client/disable', id.dhcp],
             ]);
 
-            console.log(`Turn off station and ${green('return WiFi 2.4')}`);
+            console.log('Turn off station');
+
+            if (arg === wifiOnArg) {
+                await mikrotik.write(['/interface/wireless/enable', id.wifi]);
+                console.log(green('return enabled WiFi 2.4'));
+            } else {
+                await mikrotik.write(['/interface/wireless/disable', id.wifi]);
+                console.log(magenta('return disabled WiFi 2.4'));
+            }
         } else {
             console.log([
-                `Args: ${magenta('<spot num>')}, ${cyan('wifi')}`,
+                `Args: ${magenta('<spot num>')}, ${cyan(wifiOnArg)}, ${cyan(wifiOffArg)}`,
                 '\nAvailable spots:',
                 ...spots.map((elem, i) => `${++i}. ${blue(elem.name)}`),
             ].join('\n'));
