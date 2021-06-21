@@ -3,7 +3,7 @@
 'use strict';
 
 const {args} = require('../env');
-const {green, magenta} = require('chalk');
+const {green, magenta, blue, cyan} = require('chalk');
 const {mikrotik, print} = require('@k03mad/utils');
 
 /**
@@ -22,6 +22,8 @@ const findRule = (data, name = 'station', key = 'comment') => data
  * @returns {object}
  */
 const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id']}`;
+
+const wifiArg = 'wifi';
 
 (async () => {
     try {
@@ -60,7 +62,7 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
                 return {name, password, auth, ciphers};
             });
 
-        if (arg) {
+        if (Number(arg)) {
             const spot = spots[Number(arg) - 1];
 
             if (!spot) {
@@ -81,6 +83,7 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
                 ['/interface/wireless/set', id.wifi, `=name=${stationName}`],
                 ['/interface/wireless/set', id.wifi, `=ssid=${spot.name}`],
                 ['/interface/wireless/set', id.wifi, `=comment=${stationComment.replace(/(.+?) ::/, `${spot.name} ::`)}`],
+                ['/interface/wireless/enable', id.wifi],
 
                 ['/interface/bridge/port/disable', id.bridge],
                 ['/interface/ethernet/disable', id.ether],
@@ -90,7 +93,7 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
             ]);
 
             console.log(`Turn on and switch station to: ${magenta(spot.name)}`);
-        } else {
+        } else if (arg === wifiArg) {
             await mikrotik.write([
                 ['/ip/cloud/set', '=ddns-enabled=yes'],
 
@@ -99,6 +102,7 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
                 ['/interface/wireless/set', id.wifi, `=name=${wifiName}`],
                 ['/interface/wireless/set', id.wifi, `=ssid=${apName}`],
                 ['/interface/wireless/set', id.wifi, `=comment=${stationComment.replace(/(.+?) ::/, `${apName} ::`)}`],
+                ['/interface/wireless/disable', id.wifi],
 
                 ['/interface/bridge/port/enable', id.bridge],
                 ['/interface/ethernet/enable', id.ether],
@@ -107,8 +111,13 @@ const getIdString = (data, name, key) => `=.id=${findRule(data, name, key)['.id'
                 ['/ip/dhcp-client/disable', id.dhcp],
             ]);
 
-            console.log(`Turn off station and ${green('return WiFi 2.4')}\n\nAvailable spots:`
-                      + `\n${spots.map((elem, i) => `${++i}. ${elem.name}`).join('\n')}`);
+            console.log(`Turn off station and ${green('return WiFi 2.4')}`);
+        } else {
+            console.log([
+                `Args: ${magenta('<spot num>')}, ${cyan('wifi')}`,
+                '\nAvailable spots:',
+                ...spots.map((elem, i) => `${++i}. ${blue(elem.name)}`),
+            ].join('\n'));
         }
     } catch (err) {
         print.ex(err, {full: true, exit: true});
