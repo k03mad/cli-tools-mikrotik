@@ -4,14 +4,12 @@
 
 const table = require('text-table');
 const {args} = require('../env');
-const {green, blue, yellow, magenta, red} = require('chalk');
+const {green, blue, yellow, magenta, dim} = require('chalk');
 const {mikrotik, print} = require('@k03mad/utils');
-
-const MIKROTIK_INTERFACE = '/ip/firewall/nat';
 
 (async () => {
     try {
-        const nat = await mikrotik.write(`${MIKROTIK_INTERFACE}/print`);
+        const nat = await mikrotik.write('/ip/firewall/nat/print');
         let rules = [];
         let lastComment, status;
 
@@ -27,22 +25,17 @@ const MIKROTIK_INTERFACE = '/ip/firewall/nat';
             const ids = rules.map(elem => elem['.id']);
 
             status = rules[0].disabled === 'false' ? 'disable' : 'enable';
-            await mikrotik.write([...ids.map(id => [`${MIKROTIK_INTERFACE}/${status}`, `=.id=${id}`])]);
+            await mikrotik.write([...ids.map(id => [`/ip/firewall/nat/${status}`, `=.id=${id}`])]);
         } else {
             rules = nat;
-            console.log('Pass rule name to enable/disable\n');
+            console.log('Pass rule comment as arg for enable/disable\n');
         }
 
         console.log(`${blue('Rules:')} ${status ? magenta(`${status}d`) : ''}\n`);
         console.log(table(rules.map(elem => [
-            elem.action,
-            yellow(elem.comment),
-            status
-                ? ''
-                // eslint-disable-next-line unicorn/no-nested-ternary
-                : elem.disabled === 'false'
-                    ? green('enabled')
-                    : red('disabled'),
+            yellow(elem.action),
+            green(elem.comment),
+            elem.disabled === 'true' ? green(dim('disabled')) : '',
         ])));
     } catch (err) {
         print.ex(err, {full: true, exit: true});
