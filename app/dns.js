@@ -13,15 +13,9 @@ const servers = {
     cloudflare: 'https://dns.cloudflare.com/dns-query',
 };
 
+const ovpnDelay = 2000;
 const flushArg = 'flush';
 const providerArg = 'provider';
-
-const switchPeerDns = async bool => {
-    const dhcpClients = await mikrotik.write('/ip/dhcp-client/print');
-    await mikrotik.write(
-        dhcpClients.map(elem => ['/ip/dhcp-client/set', `=.id=${elem['.id']}`, `=use-peer-dns=${bool}`]),
-    );
-};
 
 const resetOvpn = async () => {
     const interfaces = await mikrotik.write('/interface/ovpn-client/print');
@@ -29,8 +23,13 @@ const resetOvpn = async () => {
 
     if (ovpn.disabled === 'false') {
         await mikrotik.write(['/interface/ovpn-client/disable', `=.id=${ovpn['.id']}`]);
-        await promise.delay();
+        await promise.delay(ovpnDelay);
         await mikrotik.write(['/interface/ovpn-client/enable', `=.id=${ovpn['.id']}`]);
+        await promise.delay(ovpnDelay);
+
+        const scripts = await mikrotik.write('/system/script/print');
+        const rkn = scripts.find(elem => elem.name === 'set static dns for rkn');
+        await mikrotik.write(['/system/script/run', `=.id=${rkn['.id']}`]);
     }
 };
 
@@ -40,16 +39,20 @@ const resetOvpn = async () => {
         const server = servers[arg];
 
         if (arg === providerArg) {
-            await mikrotik.write([['/ip/dns/set', '=use-doh-server=']]);
+            await mikrotik.write([
+                ['/ip/dns/set', '=use-doh-server='],
+                ['/ip/dns/set', '=verify-doh-cert=no'],
+            ]);
 
-            await switchPeerDns(true);
             await resetOvpn();
             console.log(`DNS: ${blue(providerArg)}`);
 
         } else if (server) {
-            await mikrotik.write([['/ip/dns/set', `=use-doh-server=${server}`]]);
+            await mikrotik.write([
+                ['/ip/dns/set', `=use-doh-server=${server}`],
+                ['/ip/dns/set', '=verify-doh-cert=yes'],
+            ]);
 
-            await switchPeerDns(false);
             await resetOvpn();
             console.log(`DNS: ${blue(server)}`);
 
