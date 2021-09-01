@@ -18,7 +18,7 @@
     "node": ">=14"
   },
   "dependencies": {
-    "@k03mad/utils": "16.2.4",
+    "@k03mad/utils": "16.3.0",
     "chalk": "4.1.2",
     "text-table": "0.2.0",
     "update-notifier": "5.1.0",
