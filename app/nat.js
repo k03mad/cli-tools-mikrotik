@@ -4,7 +4,7 @@
 
 const table = require('text-table');
 const {args} = require('../env');
-const {green, blue, yellow, magenta, dim} = require('chalk');
+const {green, blue, yellow, magenta, dim} = require('colorette');
 const {mikrotik, print} = require('@k03mad/utils');
 
 (async () => {

@@ -3,7 +3,7 @@
 'use strict';
 
 const {args} = require('../env');
-const {green, blue, magenta, dim} = require('chalk');
+const {green, blue, magenta, dim} = require('colorette');
 const {mikrotik, print} = require('@k03mad/utils');
 
 (async () => {
