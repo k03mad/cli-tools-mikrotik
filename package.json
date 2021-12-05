@@ -15,7 +15,7 @@
   },
   "type": "module",
   "engines": {
-    "node": ">=16"
+    "node": ">=14"
   },
   "dependencies": {
     "@k03mad/utils": "20.5.0",
