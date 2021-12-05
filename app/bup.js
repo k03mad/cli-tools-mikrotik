@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-'use strict';
+import utils from '@k03mad/utils';
 
-const {mikrotik, print} = require('@k03mad/utils');
+const {mikrotik, print} = utils;
 
 (async () => {
     try {

@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-'use strict';
+import env from '../env.js';
+import utils from '@k03mad/utils';
+import {blue, cyan, green, magenta, yellow} from 'colorette';
 
-const {args, next} = require('../env');
-const {green, blue, yellow, cyan, magenta} = require('colorette');
-const {mikrotik, print, promise} = require('@k03mad/utils');
+const {mikrotik, print, promise} = utils;
 
 const servers = {
-    nextdns: next.doh,
+    nextdns: env.next.doh,
     adguard: 'https://dns.adguard.com/dns-query',
     google: 'https://dns.google/dns-query',
     cloudflare: 'https://dns.cloudflare.com/dns-query',
@@ -35,7 +35,7 @@ const resetOvpn = async () => {
 
 (async () => {
     try {
-        const [arg] = args;
+        const [arg] = env.args;
         const server = servers[arg];
 
         if (arg === providerArg) {

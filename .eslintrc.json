@@ -1,0 +1,6 @@
+{
+  "parserOptions": {
+      "sourceType": "module"
+  },
+  "extends": "@k03mad"
+}

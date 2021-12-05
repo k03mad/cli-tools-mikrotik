@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-'use strict';
+import env from '../env.js';
+import table from 'text-table';
+import utils from '@k03mad/utils';
+import {blue, dim, green, magenta, yellow} from 'colorette';
 
-const table = require('text-table');
-const {args} = require('../env');
-const {green, blue, yellow, magenta, dim} = require('colorette');
-const {mikrotik, print} = require('@k03mad/utils');
+const {mikrotik, print} = utils;
 
 (async () => {
     try {
@@ -18,7 +18,7 @@ const {mikrotik, print} = require('@k03mad/utils');
                 ? lastComment = elem.comment
                 : elem.comment = lastComment;
 
-            elem.comment.includes(args[0]) && rules.push(elem);
+            elem.comment.includes(env.args[0]) && rules.push(elem);
         });
 
         if (rules.length > 0) {

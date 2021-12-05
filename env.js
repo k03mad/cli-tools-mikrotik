@@ -1,14 +1,9 @@
-'use strict';
+import {hideBin} from 'yargs/helpers';
+import yargs from 'yargs';
 
-const pkg = require('./package.json');
-const updateNotifier = require('update-notifier');
-const {argv} = require('yargs');
+const args = yargs(hideBin(process.argv)).argv._;
 
-updateNotifier({pkg}).notify();
-
-const args = argv._;
-
-module.exports = {
+export default {
     args: args.length > 0 ? args : [],
 
     mikrotik: {

@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
-'use strict';
+import env from '../env.js';
+import utils from '@k03mad/utils';
+import {blue, dim, green, magenta} from 'colorette';
 
-const {args} = require('../env');
-const {green, blue, magenta, dim} = require('colorette');
-const {mikrotik, print} = require('@k03mad/utils');
+const {mikrotik, print} = utils;
 
 (async () => {
     try {
-        const [arg] = args;
+        const [arg] = env.args;
 
         if (arg) {
             const status = await mikrotik.switch('/interface', arg);

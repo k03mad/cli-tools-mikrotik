@@ -11,23 +11,22 @@
     "mad_mik_bup": "app/bup.js",
     "mad_mik_dns": "app/dns.js",
     "mad_mik_int": "app/int.js",
-    "mad_mik_nat": "app/nat.js",
-    "mad_mik_stn": "app/stn.js"
+    "mad_mik_nat": "app/nat.js"
   },
+  "type": "module",
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "dependencies": {
     "@k03mad/utils": "20.5.0",
     "colorette": "2.0.16",
     "text-table": "0.2.0",
-    "update-notifier": "5.1.0",
-    "yargs": "17.2.1"
+    "yargs": "17.3.0"
   },
   "devDependencies": {
-    "@k03mad/eslint-config": "9.0.0",
-    "eslint": "8.3.0",
-    "eslint-plugin-jsdoc": "37.0.3",
+    "@k03mad/eslint-config": "9.1.0",
+    "eslint": "8.4.0",
+    "eslint-plugin-jsdoc": "37.1.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-sort-requires": "2.1.0",
     "eslint-plugin-unicorn": "39.0.0",
