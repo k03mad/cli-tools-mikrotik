@@ -24,10 +24,12 @@
     "yargs": "17.3.0"
   },
   "devDependencies": {
-    "@k03mad/eslint-config": "9.1.0",
+    "@k03mad/eslint-config": "10.0.1",
     "eslint": "8.4.0",
+    "eslint-plugin-import": "2.25.3",
     "eslint-plugin-jsdoc": "37.1.0",
     "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-simple-import-sort": "7.0.0",
     "eslint-plugin-sort-requires": "2.1.0",
     "eslint-plugin-unicorn": "39.0.0",
     "husky": "7.0.4"

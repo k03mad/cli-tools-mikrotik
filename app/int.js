@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
-import env from '../env.js';
 import utils from '@k03mad/utils';
 import {blue, dim, green, magenta} from 'colorette';
+
+import env from '../env.js';
 
 const {mikrotik, print} = utils;
 

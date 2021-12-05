@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
-import env from '../env.js';
-import table from 'text-table';
 import utils from '@k03mad/utils';
 import {blue, dim, green, magenta, yellow} from 'colorette';
+import table from 'text-table';
+
+import env from '../env.js';
 
 const {mikrotik, print} = utils;
 
