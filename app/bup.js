@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import utils from '@k03mad/utils';
+import utils from '@k03mad/util';
 
 const {mikrotik, print} = utils;
 

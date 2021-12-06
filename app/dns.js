@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-import utils from '@k03mad/utils';
+
+import utils from '@k03mad/util';
 import chalk from 'chalk';
 
 import env from '../env.js';
 
-const {blue, cyan, green, magenta, yellow} = chalk;
 const {mikrotik, print, promise} = utils;
+const {blue, cyan, green, magenta, yellow} = chalk;
 
 const servers = {
     nextdns: env.next.doh,
