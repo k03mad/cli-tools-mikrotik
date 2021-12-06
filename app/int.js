@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
 import utils from '@k03mad/utils';
-import {blue, dim, green, magenta} from 'colorette';
+import chalk from 'chalk';
 
 import env from '../env.js';
 
+const {blue, dim, green, magenta} = chalk;
 const {mikrotik, print} = utils;
 
 (async () => {
