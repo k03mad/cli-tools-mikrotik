@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 import utils from '@k03mad/utils';
 import chalk from 'chalk';
 
