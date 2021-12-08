@@ -11,7 +11,7 @@ const {mikrotik, print} = utils;
 
 (async () => {
     try {
-        const nat = await mikrotik.write('/ip/firewall/nat/print');
+        const nat = await mikrotik.post('/ip/firewall/nat/print');
         let rules = [];
         let lastComment, status;
 
@@ -27,7 +27,7 @@ const {mikrotik, print} = utils;
             const ids = rules.map(elem => elem['.id']);
 
             status = rules[0].disabled === 'false' ? 'disable' : 'enable';
-            await mikrotik.write([...ids.map(id => [`/ip/firewall/nat/${status}`, `=.id=${id}`])]);
+            await Promise.all(ids.map(id => mikrotik.post(`/ip/firewall/nat/${status}`, {'.id': id})));
         } else {
             rules = nat;
             console.log('Pass rule comment as arg for enable/disable\n');

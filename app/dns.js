@@ -20,18 +20,18 @@ const flushArg = 'flush';
 const providerArg = 'provider';
 
 const resetOvpn = async () => {
-    const interfaces = await mikrotik.write('/interface/ovpn-client/print');
+    const interfaces = await mikrotik.post('/interface/ovpn-client/print');
     const ovpn = interfaces.find(elem => elem.name === 'ovpn1');
 
     if (ovpn.disabled === 'false') {
-        await mikrotik.write(['/interface/ovpn-client/disable', `=.id=${ovpn['.id']}`]);
+        await mikrotik.post('/interface/ovpn-client/disable', {'.id': ovpn['.id']});
         await promise.delay(ovpnDelay);
-        await mikrotik.write(['/interface/ovpn-client/enable', `=.id=${ovpn['.id']}`]);
+        await mikrotik.post('/interface/ovpn-client/enable', {'.id': ovpn['.id']});
         await promise.delay(ovpnDelay);
 
-        const scripts = await mikrotik.write('/system/script/print');
+        const scripts = await mikrotik.get('/system/script');
         const rkn = scripts.find(elem => elem.name === 'set static dns for rkn');
-        await mikrotik.write(['/system/script/run', `=.id=${rkn['.id']}`]);
+        await mikrotik.post('/system/script/run', {'.id': rkn['.id']});
     }
 };
 
@@ -41,18 +41,18 @@ const resetOvpn = async () => {
         const server = servers[arg];
 
         if (arg === providerArg) {
-            await mikrotik.write([
-                ['/ip/dns/set', '=use-doh-server='],
-                ['/ip/dns/set', '=verify-doh-cert=no'],
+            await Promise.all([
+                mikrotik.post('/ip/dns/set', {'use-doh-server': ''}),
+                mikrotik.post('/ip/dns/set', {'verify-doh-cert': 'no'}),
             ]);
 
             await resetOvpn();
             console.log(`DNS: ${blue(providerArg)}`);
 
         } else if (server) {
-            await mikrotik.write([
-                ['/ip/dns/set', `=use-doh-server=${server}`],
-                ['/ip/dns/set', '=verify-doh-cert=yes'],
+            await Promise.all([
+                mikrotik.post('/ip/dns/set', {'use-doh-server': server}),
+                mikrotik.post('/ip/dns/set', {'verify-doh-cert': 'yes'}),
             ]);
 
             await resetOvpn();
@@ -63,7 +63,7 @@ const resetOvpn = async () => {
             return;
         }
 
-        await mikrotik.write('/ip/dns/cache/flush');
+        await mikrotik.post('/ip/dns/cache/flush');
         console.log(yellow('Cache flushed'));
     } catch (err) {
         print.ex(err, {full: true, exit: true});

@@ -7,14 +7,14 @@ const {mikrotik, print} = utils;
 (async () => {
     try {
         console.log('Backup script started...');
-        const scripts = await mikrotik.get('system/script');
+        const scripts = await mikrotik.post('/system/script/print');
         console.log(`Found ${scripts.length} scripts`);
 
         const backup = scripts.find(elem => elem.name === 'backup');
         console.log('Started backup script');
 
         try {
-            await mikrotik.post('system/script/run', {
+            await mikrotik.post('/system/script/run', {
                 '.id': backup['.id'],
             }, {timeout: {request: 3000}});
         } catch (err) {
