@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 
-import utils from '@k03mad/util';
-
-const {mikrotik, print} = utils;
+import {mikrotik, print} from '@k03mad/util';
 
 (async () => {
     try {
