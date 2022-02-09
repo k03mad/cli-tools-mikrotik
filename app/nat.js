@@ -33,6 +33,7 @@ const {blue, dim, green, magenta, yellow} = chalk;
         }
 
         console.log(`${blue('Rules:')} ${status ? magenta(`${status}d`) : ''}\n`);
+
         console.log(table(rules.map(elem => [
             yellow(elem.action),
             green(elem.comment),
