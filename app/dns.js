@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import {mikrotik, print, promise} from '@k03mad/util';
+import {mikrotik, print} from '@k03mad/util';
 import chalk from 'chalk';
 
 import env from '../env.js';
@@ -14,24 +14,14 @@ const servers = {
     cloudflare: 'https://dns.cloudflare.com/dns-query',
 };
 
-const ovpnDelay = 2000;
 const flushArg = 'flush';
 const providerArg = 'provider';
+const ovpnArg = 'ovpn1';
 
-const resetOvpn = async () => {
-    const interfaces = await mikrotik.post('/interface/ovpn-client/print');
-    const ovpn = interfaces.find(elem => elem.name === 'ovpn1');
-
-    if (ovpn.disabled === 'false') {
-        await mikrotik.post('/interface/ovpn-client/disable', {'.id': ovpn['.id']});
-        await promise.delay(ovpnDelay);
-        await mikrotik.post('/interface/ovpn-client/enable', {'.id': ovpn['.id']});
-        await promise.delay(ovpnDelay);
-
-        const scripts = await mikrotik.get('/system/script');
-        const rkn = scripts.find(elem => elem.name === 'set static dns for rkn');
-        await mikrotik.post('/system/script/run', {'.id': rkn['.id']});
-    }
+const switchOvpn = async status => {
+    const interfaces = await mikrotik.post('/interface/print');
+    const ovpn = interfaces.find(elem => elem.name === ovpnArg);
+    await mikrotik.post(`/interface/${status}`, {'.id': ovpn['.id']});
 };
 
 (async () => {
@@ -43,22 +33,31 @@ const resetOvpn = async () => {
             await Promise.all([
                 mikrotik.post('/ip/dns/set', {'use-doh-server': ''}),
                 mikrotik.post('/ip/dns/set', {'verify-doh-cert': 'no'}),
+                switchOvpn('disable'),
             ]);
 
-            await resetOvpn();
             console.log(`DNS: ${blue(providerArg)}`);
 
         } else if (server) {
             await Promise.all([
                 mikrotik.post('/ip/dns/set', {'use-doh-server': server}),
                 mikrotik.post('/ip/dns/set', {'verify-doh-cert': 'yes'}),
+                switchOvpn('disable'),
             ]);
 
-            await resetOvpn();
             console.log(`DNS: ${blue(server)}`);
 
+        } else if (arg === ovpnArg) {
+            await Promise.all([
+                mikrotik.post('/ip/dns/set', {'use-doh-server': ''}),
+                mikrotik.post('/ip/dns/set', {'verify-doh-cert': 'no'}),
+                switchOvpn('enable'),
+            ]);
+
+            console.log(`DNS: ${blue(ovpnArg)}`);
+
         } else if (arg !== flushArg) {
-            console.log(`Args: ${green(Object.keys(servers).join(', '))}, ${magenta(flushArg)}, ${cyan(providerArg)}`);
+            console.log(`Args: ${green(Object.keys(servers).join(', '))}, ${cyan(ovpnArg)}, ${cyan(providerArg)}, ${magenta(flushArg)}`);
             return;
         }
 
