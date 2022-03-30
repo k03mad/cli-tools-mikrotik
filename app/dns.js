@@ -8,7 +8,6 @@ import env from '../env.js';
 const {blue, cyan, green, magenta, yellow} = chalk;
 
 const servers = {
-    nextdns: env.next.doh,
     adguard: 'https://dns.adguard.com/dns-query',
     google: 'https://dns.google/dns-query',
     cloudflare: 'https://dns.cloudflare.com/dns-query',
