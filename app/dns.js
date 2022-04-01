@@ -8,7 +8,7 @@ import env from '../env.js';
 const {blue, cyan, green, magenta, yellow} = chalk;
 
 const servers = {
-    adguard: 'https://dns.adguard.com/dns-query',
+    adguard: env.adg.doh,
     google: 'https://dns.google/dns-query',
     cloudflare: 'https://dns.cloudflare.com/dns-query',
 };

@@ -9,6 +9,9 @@ export default {
     mikrotik: {
         host: process.env.MIKROTIK_HOST,
     },
+    adg: {
+        doh: process.env.ADG_DNS_DOH,
+    },
     next: {
         doh: process.env.NEXT_DNS_DOH,
     },
