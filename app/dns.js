@@ -9,7 +9,7 @@ import log from '../log.js';
 const {blue, cyan, green, magenta, yellow} = chalk;
 
 const servers = {
-    adguard: env.adg.doh,
+    adg: env.adg.doh,
     google: 'https://dns.google/dns-query',
     cloudflare: 'https://dns.cloudflare.com/dns-query',
 };

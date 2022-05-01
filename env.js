@@ -12,7 +12,4 @@ export default {
     adg: {
         doh: process.env.ADG_DNS_DOH,
     },
-    next: {
-        doh: process.env.NEXT_DNS_DOH,
-    },
 };
