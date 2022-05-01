@@ -5,6 +5,7 @@ import chalk from 'chalk';
 import table from 'text-table';
 
 import env from '../env.js';
+import log from '../log.js';
 
 const {blue, dim, green, magenta, yellow} = chalk;
 
@@ -29,12 +30,12 @@ const {blue, dim, green, magenta, yellow} = chalk;
             await Promise.all(ids.map(id => mikrotik.post(`/ip/firewall/nat/${status}`, {'.id': id})));
         } else {
             rules = nat;
-            console.log('Pass rule comment as arg for enable/disable\n');
+            log('Pass rule comment as arg for enable/disable\n');
         }
 
-        console.log(`${blue('Rules:')} ${status ? magenta(`${status}d`) : ''}\n`);
+        log(`${blue('Rules:')} ${status ? magenta(`${status}d`) : ''}\n`);
 
-        console.log(table(rules.map(elem => [
+        log(table(rules.map(elem => [
             yellow(elem.action),
             green(elem.comment),
             elem.disabled === 'true' ? green(dim('disabled')) : '',

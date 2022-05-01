@@ -4,6 +4,7 @@ import {mikrotik, print} from '@k03mad/util';
 import chalk from 'chalk';
 
 import env from '../env.js';
+import log from '../log.js';
 
 const {blue, cyan, green, magenta, yellow} = chalk;
 
@@ -35,7 +36,7 @@ const switchOvpn = async status => {
                 switchOvpn('disable'),
             ]);
 
-            console.log(`DNS: ${blue(providerArg)}`);
+            log(`DNS: ${blue(providerArg)}`);
 
         } else if (server) {
             await Promise.all([
@@ -44,7 +45,7 @@ const switchOvpn = async status => {
                 switchOvpn('disable'),
             ]);
 
-            console.log(`DNS: ${blue(server)}`);
+            log(`DNS: ${blue(server)}`);
 
         } else if (arg === ovpnArg) {
             await Promise.all([
@@ -53,15 +54,15 @@ const switchOvpn = async status => {
                 switchOvpn('enable'),
             ]);
 
-            console.log(`DNS: ${blue(ovpnArg)}`);
+            log(`DNS: ${blue(ovpnArg)}`);
 
         } else if (arg !== flushArg) {
-            console.log(`Args: ${green(Object.keys(servers).join(', '))}, ${cyan(ovpnArg)}, ${cyan(providerArg)}, ${magenta(flushArg)}`);
+            log(`Args: ${green(Object.keys(servers).join(', '))}, ${cyan(ovpnArg)}, ${cyan(providerArg)}, ${magenta(flushArg)}`);
             return;
         }
 
         await mikrotik.post('/ip/dns/cache/flush');
-        console.log(yellow('Cache flushed'));
+        log(yellow('Cache flushed'));
     } catch (err) {
         print.ex(err, {full: true, exit: true});
     }
