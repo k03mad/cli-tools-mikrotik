@@ -16,13 +16,6 @@ const servers = {
 
 const flushArg = 'flush';
 const providerArg = 'provider';
-const ovpnArg = 'ovpn1';
-
-const switchOvpn = async status => {
-    const interfaces = await mikrotik.post('/interface/print');
-    const ovpn = interfaces.find(elem => elem.name === ovpnArg);
-    await mikrotik.post(`/interface/${status}`, {'.id': ovpn['.id']});
-};
 
 (async () => {
     try {
@@ -33,7 +26,6 @@ const switchOvpn = async status => {
             await Promise.all([
                 mikrotik.post('/ip/dns/set', {'use-doh-server': ''}),
                 mikrotik.post('/ip/dns/set', {'verify-doh-cert': 'no'}),
-                switchOvpn('disable'),
             ]);
 
             log(`DNS: ${blue(providerArg)}`);
@@ -42,22 +34,12 @@ const switchOvpn = async status => {
             await Promise.all([
                 mikrotik.post('/ip/dns/set', {'use-doh-server': server}),
                 mikrotik.post('/ip/dns/set', {'verify-doh-cert': 'yes'}),
-                switchOvpn('disable'),
             ]);
 
             log(`DNS: ${blue(server)}`);
 
-        } else if (arg === ovpnArg) {
-            await Promise.all([
-                mikrotik.post('/ip/dns/set', {'use-doh-server': ''}),
-                mikrotik.post('/ip/dns/set', {'verify-doh-cert': 'no'}),
-                switchOvpn('enable'),
-            ]);
-
-            log(`DNS: ${blue(ovpnArg)}`);
-
         } else if (arg !== flushArg) {
-            log(`Args: ${green(Object.keys(servers).join(', '))}, ${cyan(ovpnArg)}, ${cyan(providerArg)}, ${magenta(flushArg)}`);
+            log(`Args: ${green(Object.keys(servers).join(', '))}, ${cyan(providerArg)}, ${magenta(flushArg)}`);
             return;
         }
 
