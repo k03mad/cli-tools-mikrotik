@@ -9,9 +9,9 @@ import log from '../log.js';
 const {blue, cyan, green, magenta, yellow} = chalk;
 
 const servers = {
-    adg: env.adg.doh,
-    google: 'https://dns.google/dns-query',
+    adguard: env.adg.doh,
     cloudflare: 'https://dns.cloudflare.com/dns-query',
+    google: 'https://dns.google/dns-query',
 };
 
 const flushArg = 'flush';
