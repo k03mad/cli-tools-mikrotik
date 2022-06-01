@@ -24,7 +24,7 @@
     "yargs": "17.5.0"
   },
   "devDependencies": {
-    "@k03mad/eslint-config": "11.0.4",
+    "@k03mad/eslint-config": "11.0.5",
     "eslint": "8.15.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jsdoc": "39.2.9",
