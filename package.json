@@ -18,20 +18,20 @@
     "node": ">=14"
   },
   "dependencies": {
-    "@k03mad/util": "10.0.1",
+    "@k03mad/util": "10.0.3",
     "chalk": "5.0.1",
     "text-table": "0.2.0",
-    "yargs": "17.5.0"
+    "yargs": "17.5.1"
   },
   "devDependencies": {
-    "@k03mad/eslint-config": "11.0.4",
-    "eslint": "8.15.0",
+    "@k03mad/eslint-config": "11.0.5",
+    "eslint": "8.18.0",
     "eslint-plugin-import": "2.26.0",
-    "eslint-plugin-jsdoc": "39.2.9",
+    "eslint-plugin-jsdoc": "39.3.3",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-simple-import-sort": "7.0.0",
     "eslint-plugin-sort-destructure-keys": "1.4.0",
-    "eslint-plugin-unicorn": "42.0.0",
+    "eslint-plugin-unicorn": "43.0.0",
     "husky": "8.0.1"
   },
   "scripts": {
